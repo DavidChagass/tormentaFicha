@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('resistencia')->nullable();
             $table->longText('descricao');
         });
-
     }
 
     /**
@@ -32,6 +31,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+           Schema::dropIfExists('personagens_magia');
         //
     }
 };

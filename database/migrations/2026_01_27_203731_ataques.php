@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('personagens_itens', function (Blueprint $table) {
+         Schema::create('ataques', function (Blueprint $table) {
             $table->id();
             $table->foreignId('personagem_id')->constrained()->onDelete('cascade');
-            $table->string('nome');
-            $table->integer('quantidade')->default(1);
-            $table->integer('peso')->default(1);
-            $table->longText('descricao')->default(' ');
+            $table->string('nome')->default('ataque');
+            $table->text('descricao');
         });
     }
 
@@ -26,7 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('personagens_itens');
-        //
+           Schema::dropIfExists('ataques');
     }
 };
