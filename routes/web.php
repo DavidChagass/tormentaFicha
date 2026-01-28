@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PersonagemController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,3 +14,10 @@ Route::get('/login', function(){
 
 
 Route::post('login', [AuthController::class,'login']);
+
+Route::middleware('auth')->group(function(){
+    Route::get('/dashboard',[PersonagemController::class, 'index'])->name('dashboard');
+
+
+
+});

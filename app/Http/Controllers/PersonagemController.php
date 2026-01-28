@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MagiaRequest;
+use App\Http\Requests\personagemRequest;
 use App\Models\Personagem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,9 +13,23 @@ class PersonagemController extends Controller
     public function index()
     {
         $personagens = Personagem::where('user_id', Auth::id())->get();
-        return view('personagens.index', compact('personagens'));
+        if(!$personagens){
+            return redirect()->route('personagem.create');
+        }
+        return view('dashboard');
+    }
+    
+    public function create(){
+        return view('personagem.create');
     }
 
+    public function store(personagemRequest $request){
+        $dados = $request->validated();
+        
+        $dados['user_id'] = Auth::id();
+        $personagem = Personagem::query()->create($dados);
+        return redirect()->route('personagem.show', $personagem->id);
+    }
 
     public function storeMagia(MagiaRequest $request, Personagem $personagem)
     {
