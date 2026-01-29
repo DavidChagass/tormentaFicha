@@ -11,13 +11,6 @@ class PersonagemItem extends Model
     
     public $timestamps = false;
 
-    protected $fillable = [
-        'personagem_id', 
-        'nome',
-        'quantidade',
-        'peso',
-        'descricao',
-    ];
 
     public function personagem()
     {

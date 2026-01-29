@@ -13,7 +13,7 @@ return new class extends Migration
     {
           Schema::create('personagens_magia', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('personagem_id')->constrained()->onDelete('cascade');
+            $table->foreignId('personagem_id')->constrained('personagens')->onDelete('cascade');
             $table->string('nome');
             $table->integer('circulo');
             $table->string('escola');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('alvo');
             $table->string('duracao');
             $table->string('resistencia')->nullable();
-            $table->longText('descricao');
+            $table->longText('descricao')->nullable();
         });
     }
 

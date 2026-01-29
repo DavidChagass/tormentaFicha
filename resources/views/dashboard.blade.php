@@ -11,17 +11,28 @@
 </head>
 
 <body class="bg-[#fdf6e3]">
-    <div class=" py-20 content-center place-items-center">
-        <a class="bg-red-600 text-white p-4 " href="{{ route('personagem.create') }}">criar personagem</a>
+    <div class="mt-12"></div>
+    <a class="bg-red-800 text-white p-2 rounded m-4 " href="{{ route('personagem.create') }}">
+        Criar personagem
+    </a>
+    <div class=" ">
+
     </div>
-    <hr>
     <ul>
         @foreach ($personagens as $p)
-            <li class="bg-red-50">
-                <a href="{{ route('personagem.show', $p->id) }}">
-                    {{ $p->nome }} - nivel {{ $p->nivel }} {{ $p->classe }}
+            <li class="ml-4 my-8 p-4 w-40 bg-red-800">
+                <a class="    rounded text-white" href="{{ route('personagem.show', $p->id) }}">
+                    {{ $p->nome }} - nivel {{ $p->nivel }} - {{ $p->classe }}
                 </a>
+
             </li>
+
+            <form class="my-16" action="{{ route('delete.personagem', $p->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit">deletar o personagem: {{ $p->nome }}</button>
+            </form>
+            <hr class="border border-2 border-gray-900 my-2 w-60 ">
         @endforeach
     </ul>
 </body>

@@ -13,9 +13,9 @@ return new class extends Migration
     {
          Schema::create('ataques', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('personagem_id')->constrained()->onDelete('cascade');
+            $table->foreignId('personagem_id')->constrained('personagens')->onDelete('cascade');
             $table->string('nome')->default('ataque');
-            $table->text('descricao');
+            $table->text('descricao')->nullable();
         });
     }
 

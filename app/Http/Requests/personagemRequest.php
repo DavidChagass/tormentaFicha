@@ -27,6 +27,7 @@ class personagemRequest extends FormRequest
             'raca' =>'required|string',
             'classe' =>'required|string',
             'divindade' =>'nullable|string',
+            'nivel' => 'nullable|integer'
         ];
     }
     public function messages(): array

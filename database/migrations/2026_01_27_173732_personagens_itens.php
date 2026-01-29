@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('personagens_itens', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('personagem_id')->constrained()->onDelete('cascade');
+            $table->foreignId('personagem_id')->constrained('personagens')->onDelete('cascade');
             $table->string('nome');
             $table->integer('quantidade')->default(1);
             $table->integer('peso')->default(1);
-            $table->longText('descricao')->default(' ');
+            $table->longText('descricao')->nullable();
         });
     }
 

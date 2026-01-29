@@ -31,13 +31,13 @@ class FichaPersonagem extends Component
         'dados.mp_atual' => 'nullable|integer',
         'dados.mp_maximo' => 'nullable|integer',
         'dados.descricao' => 'nullable|string',
+        'dados.defesa' => 'nullable|integer',
 
         'pericias.*.treinado' => 'boolean',
         'pericias.*.outros_bonus' => 'nullable|integer',
 
-        'ataques.*.nome' => 'nullable|string',
-        'ataques.*.bonus' => 'nullable|integer',
-        'ataques.*.dano' => 'nullable|string',
+        'ataques.*.nome' => 'nullable|string|max:255',
+        'ataques.*.descricao' => 'nullable|string',
     ];
 
 

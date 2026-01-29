@@ -11,7 +11,7 @@ class PersonagemMagia extends Model
     
     public $timestamps = false;
 
-    protected $fillable = [
+/*     protected $fillable = [
         'personagem_id',
         'nome',
         'circulo',
@@ -24,7 +24,7 @@ class PersonagemMagia extends Model
         'descricao',
     ];
 
-
+ */
      public function personagem()
     {
         return $this->belongsTo(Personagem::class);

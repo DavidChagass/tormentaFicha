@@ -24,7 +24,7 @@
                 <span class="text font-bold">CLASSE</span>
                 <input type="text" wire:model="dados.classe" class="w-22 bg-transparent text-left ">
             </div>
-            <!-- CLASSE -->
+            <!-- DIVINDADE -->
             <div class="bg-[#f4ebd0] border-l-2 pl-2 border-red-900">
                 <span class="text font-bold">DIVINDADE</span>
                 <input type="text" wire:model="dados.divindade" class="w-20 bg-transparent text-left">
@@ -53,8 +53,10 @@
             <!-- CONTEÚDO PRINCIPAL -->
             <div class="col-span-10 md:col-span-10">
                 <!-- PV / ESTRESSE / PM / NÍVEL -->
-                <div class="grid grid-cols-3 gap-2 mb-2 text-center">
-                    <div class="bg-red-50 border border-red-900">
+                <div class="grid grid-cols-4 gap-2 mb-2 text-center">
+
+                    <!-- PV -->
+                    <div class="bg-red-50 p-2 border border-red-900">
                         <span class="text font-bold text-red-800">VIDA</span>
                         <div class="flex justify-center ">
                             <input type="number" wire:model="dados.hp_atual"
@@ -62,21 +64,32 @@
                             <input type="number" wire:model="dados.hp_maximo" class="w-8 bg-transparent text-center">
                         </div>
                     </div>
-                    <div class="bg-purple-50 border border-purple-900">
+                    <!-- ESTRESSE -->
+                    <div class="bg-purple-50 p-2 border border-purple-900">
                         <span class="text font-bold text-purple-800">ESTRESSE</span>
                         <div class="flex justify-center ">
                             <input type="number" wire:model="dados.estresse_atual"
                                 class="w-8 bg-transparent text-center font-bold"> /
-                            <input type="number" wire:model="dados.estresse_maximo" class="w-8 bg-transparent text-center">
+                            <input type="number" wire:model="dados.estresse_maximo"
+                                class="w-8 bg-transparent text-center">
                         </div>
                     </div>
+                    <!-- PM -->
                     <div class="bg-blue-50 p-2 border border-blue-900">
-                        <span class="text-xs font-bold text-blue-800">MANA</span>
+                        <span class="text font-bold text-blue-800">MANA</span>
                         <div class="flex justify-center ">
                             <input type="number" wire:model="dados.mp_atual"
                                 class="w-8 bg-transparent text-center font-bold"> /
                             <input type="number" wire:model.blur="dados.mp_maximo"
                                 class="w-8 bg-transparent text-center">
+                        </div>
+                    </div>
+                    <!-- DEFESA -->
+                    <div class="bg-gray-200 p-2 border border-gray-900">
+                        <span class="text font-bold text-gray-800">DEFESA</span>
+                        <div class="flex justify-center ">
+                            <input type="number" wire:model="dados.defesa"
+                                class="w-8 bg-transparent text-center font-bold"> 
                         </div>
                     </div>
                 </div>
@@ -97,33 +110,40 @@
                         class="px-4 py-1 text-xs uppercase font-bold transition">Magias</button>
                     <button @click="tab = 'desc'"
                         :class="tab === 'desc' ? 'text-white bg-red-900' : 'text-gray-500'"
-                        class="px-4 py-1 text-xs uppercase font-bold transition">Bio</button>
+                        class="px-4 py-1 text-xs uppercase font-bold transition">Descrição</button>
                 </div>
 
                 <!-- CONTEÚDO DAS ABAS -->
                 <div class=" p-4 shadow-inner min-h-[400px] bg-[#f4ebd0] border-2 border-red-900 rounded">
 
                     <!-- PERÍCIAS -->
-                    <div x-show="tab === 'pericias'" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 bg-[#f4ebd0]">
-   
+                    <div x-show="tab === 'pericias'"
+                        class="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 bg-[#f4ebd0]">
+
                         @foreach ($pericias as $idx => $pericia)
-                            <div class="flex items-center justify-between border-b border-gray-300 py-1 gap-2">
+                            <div class="flex items-center border-b border-gray-300 py-1 gap-2">
                                 <div class="flex items-center gap-2 flex-1">
                                     <!-- Checkbox de Treinado -->
                                     <input type="checkbox" wire:model.live="pericias.{{ $idx }}.treinado"
                                         class="accent-red-800 h-4 w-4 cursor-pointer">
                                     <span
-                                        class="text-xs uppercase font-semibold text-gray-700">{{ $pericia['nome'] }}</span>
+                                        class="text-sm uppercase font-semibold text-gray-800">{{ $pericia['nome'] }}</span>
                                 </div>
-                                <div class="w-30 text-center bg-red-900 text-white font-bold rounded text-sm mr-10">
-                                    <p class="text-sm px-2">1/2 do nivel: <span class="pl-[px:2]">{{ floor($dados['nivel']/2)}} </span></p>
+                                <div class="w-30 text-center bg-red-900 text-white font-bold rounded text-sm mr-4">
+                                    <p class="text-xs px-2">1/2 nivel: <span
+                                            class="pl-[px:2]">{{ floor($dados['nivel'] / 2) }} </span></p>
                                 </div>
+
+                                <label
+                                    class="text-sm font-bold uppercase text-gray-800">{{ substr($pericia['atributo_base'], 0, 3) }}</label>
+
+
                                 <div class="flex items-center gap-2">
                                     <input type="number" wire:model.blur="pericias.{{ $idx }}.outros_bonus"
                                         placeholder="0"
-                                        class="w-10 text-center text-xs border-b border-gray-400 bg-transparent focus:outline-none focus:border-red-800">
+                                        class="w-10 text-center text-sm border-b border-gray-400 bg-transparent focus:outline-none text-gray-800 focus:border-red-800">
 
-                                    <div class="w-8 text-center bg-red-900 text-white font-bold rounded text-sm">
+                                    <div class="w-8 text-center bg-red-900 text-white font-bold rounded text-base">
                                         {{ floor($dados['nivel'] / 2) +
                                             ($dados[$pericia['atributo_base']] ?? 0) +
                                             ($pericia['treinado'] ? 2 : 0) +
@@ -132,8 +152,10 @@
                                 </div>
                             </div>
                         @endforeach
-                        + = Penalidade de armadura
-                        / * = Somente treinada
+                        <div class="border border-red-800 content-center place-items-center p-1 rounded">
+                            <p class="justify-center ml-2 italic"> + = Penalidade de armadura
+                                / * = Somente treinada</p>
+                        </div>
                     </div>
 
 
@@ -167,6 +189,9 @@
 
                     <!-- MAGIAS -->
                     <div x-show="tab === 'magias'">
+                        <a href="{{ route('magia.create') }}"
+                            class="bg-red-800 text-white px-2 py-2 rounded font-bold hover:bg-red-700 transition">Adicionar
+                            magia</a>
                         @foreach ($magias as $magia)
                             <details class="mb-2 border-l-4 border-blue-800">
                                 <summary class="p-2 font-bold cursor-pointer bg-blue-50">
@@ -180,13 +205,13 @@
                                 </div>
                             </details>
                         @endforeach
+
                     </div>
 
                     <!-- DESCRIÇÃO / BIO -->
                     <div x-show="tab === 'desc'">
                         <textarea wire:model="dados.descricao" rows="10"
-                            class="w-full p-2 border-2 border-dashed border-gray-300 focus:outline-none"
-                            placeholder="Conte a história do seu herói..."></textarea>
+                            class="w-full p-2 border-2 border-dashed border-gray-300 focus:outline-none" placeholder="Conte as coisas"></textarea>
                     </div>
 
                 </div>

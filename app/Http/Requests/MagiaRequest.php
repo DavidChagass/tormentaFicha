@@ -25,12 +25,12 @@ class MagiaRequest extends FormRequest
             //
             'nome' => 'required|string|max:255',
             'circulo' => 'required|integer',
-            'escola' => 'required|string',
-            'execucao' => 'required|string',
-            'alcance' => 'required|string',
-            'alvo' => 'required|string',
-            'duracao' => 'required|string',
-            'resistencia' => 'required|string',
+            'escola' => 'required|string|max:255',
+            'execucao' => 'required|string|max:255',
+            'alcance' => 'required|string|max:255',
+            'alvo' => 'required|string|max:255',
+            'duracao' => 'required|string|max:255',
+            'resistencia' => 'required|string|max:255',
             'descricao' => 'required'
         ];
     }

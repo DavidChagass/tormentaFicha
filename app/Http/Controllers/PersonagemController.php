@@ -13,34 +13,36 @@ class PersonagemController extends Controller
     public function index()
     {
         $personagens = Personagem::where('user_id', Auth::id())->get();
-        if(!$personagens){
+        if (!$personagens) {
             return redirect()->route('personagem.create');
         }
         return view('dashboard', compact('personagens'));
     }
-    
-    public function create(){
+
+    public function create()
+    {
         return view('personagem.create');
     }
 
-    public function store(personagemRequest $request){
+    public function store(personagemRequest $request)
+    {
         $dados = $request->validated();
-        
-        $dados['user_id'] = Auth::id(); 
-     //   dd($dados);
-      //  dd(Auth::id());
+
+        $dados['user_id'] = Auth::id();
         $personagem = Personagem::query()->create($dados);
         return redirect()->route('personagem.show', $personagem->id);
     }
 
-    public function magiaCreate(){
+    public function magiaCreate()
+    {
         return view('magia.create');
     }
     public function storeMagia(MagiaRequest $request, Personagem $personagem)
     {
+        dd($request);
         $personagem->magias()->create($request->validated());
 
-        return back()->with('sucesso', 'Eba MAGIA!!!');
+        return redirect()->route('personagem.show', $personagem->id);
     }
 
     public function show($id)
@@ -50,5 +52,18 @@ class PersonagemController extends Controller
             abort(403, 'ta querendo ver a ficha dos outros né');
         }
         return view('personagem.ficha', compact('personagem'));
+    }
+
+
+
+
+
+
+
+    public function destroy($id)
+    {
+        $personagem = Personagem::find($id);
+        $personagem->delete();
+        return redirect()->route('dashboard');
     }
 }

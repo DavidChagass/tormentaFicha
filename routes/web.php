@@ -8,7 +8,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/', function () {
+Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
@@ -21,7 +21,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/personagem/criar', [PersonagemController::class, 'create'])->name('personagem.create');
     Route::post('/personagem/criar', [PersonagemController::class, 'store'])->name('personagem.store');
     Route::get('/personagem/{id}', [PersonagemController::class, 'show'])->name('personagem.show');
-
-
-
+    
+    Route::get('/magia/criar',[PersonagemController::class, 'magiaCreate'])->name('magia.create');
+    Route::post('/magia/criar',[PersonagemController::class, 'storeMagia'])->name('magia.store');
+    Route::delete('/personagem/delete/{id}',[PersonagemController::class,'destroy'])->name('delete.personagem');
 });
