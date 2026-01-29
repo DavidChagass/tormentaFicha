@@ -31,6 +31,13 @@ return new class extends Migration
             $table->integer('hp_maximo')->default(1);
             $table->integer('mp_atual')->default(1);
             $table->integer('mp_maximo')->default(1);
+            $table->integer('estresse_atual')->default(0);
+            $table->integer('estresse_maximo')->default(10);
+
+
+
+            $table->longText('descricao')->default(' ');
+
             $table->timestamps();
         });
     }

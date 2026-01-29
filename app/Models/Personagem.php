@@ -12,8 +12,7 @@ class Personagem extends Model
 {
     protected $table = 'personagens';
     protected $guarded = [];
-    protected $fillable = [
-        'user_id',
+/*         'user_id',
         'nome',
         'raca',
         'classe',
@@ -31,7 +30,8 @@ class Personagem extends Model
         'hp_maximo',
         'mp_atual',
         'mp_maximo',
-    ];
+        'estresse_atual',
+        'estresse_maximo', */
 
     public function magias()
     {
@@ -44,5 +44,13 @@ class Personagem extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function pericias()
+    {
+        return $this->hasMany(Pericias::class, 'personagem_id');
+    }
+        public function ataques()
+    {
+        return $this->hasMany(Ataques::class, 'personagem_id');
     }
 }

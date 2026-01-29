@@ -16,7 +16,7 @@ class PersonagemController extends Controller
         if(!$personagens){
             return redirect()->route('personagem.create');
         }
-        return view('dashboard');
+        return view('dashboard', compact('personagens'));
     }
     
     public function create(){
@@ -26,7 +26,9 @@ class PersonagemController extends Controller
     public function store(personagemRequest $request){
         $dados = $request->validated();
         
-        $dados['user_id'] = Auth::id();
+        $dados['user_id'] = Auth::id(); 
+     //   dd($dados);
+      //  dd(Auth::id());
         $personagem = Personagem::query()->create($dados);
         return redirect()->route('personagem.show', $personagem->id);
     }
@@ -44,6 +46,6 @@ class PersonagemController extends Controller
         if ($personagem->user_id != Auth::id()) {
             abort(403, 'ta querendo ver a ficha dos outros né');
         }
-        return view('personagens.ficha', compact('personagem'));
+        return view('personagem.ficha', compact('personagem'));
     }
 }
