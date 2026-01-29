@@ -10,7 +10,7 @@
 
 <body>
     <div>
-        <form action="{{route('magia.store', $id)}}" method="POST">
+        <form action="{{ route('magia.store', $id) }}" method="POST">
             @csrf
             <div>
                 <input type="text" name="nome" placeholder="nome" required>

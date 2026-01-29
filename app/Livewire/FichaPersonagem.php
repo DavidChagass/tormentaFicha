@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Personagem as Personagem;
+use Illuminate\Support\Facades\DB;
 
 class FichaPersonagem extends Component
 {
@@ -103,41 +104,50 @@ class FichaPersonagem extends Component
         }
     }
 
+
+    public function updated($propertyName, $value)
+    {
+        if (str_starts_with($propertyName, 'dados.')) {
+            $campo = str_replace('dados.', '', $propertyName);
+            DB::table('personagens')->where('id', $this->personagemId)->update([$campo => $value]);
+        }
+
+        if (str_starts_with($propertyName, 'pericias.')) {
+            $parts = explode('.', $propertyName);
+            $index = $parts[1];
+            $campo = $parts[2];
+            $id = $this->pericias[$index]['id'];
+
+            DB::table('pericias')->where('id', $id)->update([
+                $campo => ($campo === 'treinado') ? ($value ? 1 : 0) : $value
+            ]);
+        }
+
+        if (str_starts_with($propertyName, 'ataques.')) {
+            $parts = explode('.', $propertyName);
+            $index = $parts[1];
+            $campo = $parts[2];
+            $id = $this->ataques[$index]['id'];
+
+            DB::table('ataques')->where('id', $id)->update([$campo => $value]);
+        }
+    }
+
     public function salvar()
     {
         try {
             $p = Personagem::find($this->personagemId);
-
-            $dadosParaSalvar = collect($this->dados)
-                ->except(['pericias', 'itens', 'magias', 'ataques'])
-                ->toArray();
-
-            $p->update($dadosParaSalvar);
+            $p->update(collect($this->dados)->except(['pericias', 'itens', 'magias', 'ataques'])->toArray());
 
             foreach ($this->pericias as $periciaData) {
-                \DB::table('pericias')
-                    ->where('id', $periciaData['id'])
-                    ->update([
-                        'treinado' => $periciaData['treinado'] ? 1 : 0,
-                        'outros_bonus' => intval($periciaData['outros_bonus'] ?? 0)
-                    ]);
+                DB::table('pericias')->where('id', $periciaData['id'])->update([
+                    'treinado' => $periciaData['treinado'] ? 1 : 0,
+                    'outros_bonus' => intval($periciaData['outros_bonus'] ?? 0)
+                ]);
             }
-
-            if (!empty($this->ataques)) {
-                foreach ($this->ataques as $ataqueData) {
-                    \DB::table('ataques')
-                        ->where('id', $ataqueData['id'])
-                        ->update([
-                            'nome' => $ataqueData['nome'],
-                            'bonus' => intval($ataqueData['bonus']),
-                            'dano' => $ataqueData['dano']
-                        ]);
-                }
-            }
-
             session()->flash('status', 'dados salvos');
         } catch (\Exception $e) {
-            session()->flash('error', 'Erro ao salvar: ' . $e->getMessage());
+            session()->flash('error', 'Erro: ' . $e->getMessage());
         }
     }
 
