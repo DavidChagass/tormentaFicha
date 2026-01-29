@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MagiaRequest;
 use App\Http\Requests\personagemRequest;
 use App\Models\Personagem;
+use App\Models\PersonagemMagia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,6 +53,7 @@ class PersonagemController extends Controller
     }
 
 
+
     //MAGIAS
     public function magiaCreate($id)
     {
@@ -63,6 +65,31 @@ class PersonagemController extends Controller
     {
         $personagem = Personagem::findOrFail($id);
         $personagem->magias()->create($request->validated());
+        return redirect()->route('personagem.show', $id);
+    }
+    public function editMagia($id)
+    {
+        $magia = PersonagemMagia::findOrFail($id);
+       // dd($magia);
+        return view('magia.edit', compact('magia'));
+    }
+
+    public function updateMagia(MagiaRequest $request, $id)
+    {
+        $magia = PersonagemMagia::findOrFail($id);
+     //   dd($request->validated());
+        $personagem_id = $magia->personagem_id;
+        $magia->update($request->validated());
+        return redirect()->route('personagem.show', $personagem_id);
+    }
+
+    public function destroyMagia($id)
+    {
+        $magia = PersonagemMagia::find($id);
+        $id =  $magia->personagem_id;
+        //dd($id);
+        $magia->delete();
+
         return redirect()->route('personagem.show', $id);
     }
 }

@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/personagem/{id}/magia/criar',[PersonagemController::class, 'magiaCreate'])->name('magia.create');
 
     Route::post('/personagem/{id}/magia/criar',[PersonagemController::class, 'storeMagia'])->name('magia.store');
-    Route::get('/personagem/{id}/magia/edit',[PersonagemController::class, 'edit'])->name('magia.edit');
-
-
+    Route::get('/personagem/{id}/magia/edit',[PersonagemController::class, 'editMagia'])->name('magia.edit');
+    Route::put('/personagem/{id}/magia/edit',[PersonagemController::class,'updateMagia'])->name('magia.update');
+    Route::delete('/personagem/{id}/magia/update', [PersonagemController::class, 'destroyMagia'])->name('magia.delete');
 });

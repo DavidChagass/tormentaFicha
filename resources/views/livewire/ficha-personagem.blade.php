@@ -187,7 +187,7 @@
                                         {{ $magia['resistencia'] }}</p>
                                     {{ $magia['descricao'] }}
                                 </div>
-                                <a href=""
+                                <a href="{{route('magia.edit', $magia['id'] )}}"
                                     class="ml-2 bg-yellow-700 text-white px-1 py-1 rounded font-bold hover:bg-yellow-600 transition mb-8">edit</a>
                             </details>
                         @endforeach
