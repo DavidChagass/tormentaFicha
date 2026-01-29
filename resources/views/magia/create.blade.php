@@ -10,7 +10,7 @@
 
 <body>
     <div>
-        <form action="{{route('magia.store')}}" method="POST">
+        <form action="{{route('magia.store', $id)}}" method="POST">
             @csrf
             <div>
                 <input type="text" name="nome" placeholder="nome" required>
@@ -37,8 +37,7 @@
                 <input type="text" name="resistencia" placeholder="resistencia" required>
             </div>
             <div>
-                <textarea name="descricao" placeholder="melhorias de magia, etc">
-                </textarea>
+                <textarea rows="10" cols="20" name="descricao" placeholder="melhorias de magia, etc"></textarea>
             </div>
 
             <button type="submit">criar magia</button>

@@ -189,8 +189,8 @@
 
                     <!-- MAGIAS -->
                     <div x-show="tab === 'magias'">
-                        <a href="{{ route('magia.create') }}"
-                            class="bg-red-800 text-white px-2 py-2 rounded font-bold hover:bg-red-700 transition">Adicionar
+                        <a href="{{ route('magia.create', $personagemId) }}"
+                            class="bg-red-800 text-white px-2 py-2 rounded font-bold hover:bg-red-700 transition mb-8">Adicionar
                             magia</a>
                         @foreach ($magias as $magia)
                             <details class="mb-2 border-l-4 border-blue-800">

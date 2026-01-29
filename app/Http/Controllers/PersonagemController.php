@@ -33,17 +33,7 @@ class PersonagemController extends Controller
         return redirect()->route('personagem.show', $personagem->id);
     }
 
-    public function magiaCreate()
-    {
-        return view('magia.create');
-    }
-    public function storeMagia(MagiaRequest $request, Personagem $personagem)
-    {
-        dd($request);
-        $personagem->magias()->create($request->validated());
 
-        return redirect()->route('personagem.show', $personagem->id);
-    }
 
     public function show($id)
     {
@@ -54,16 +44,25 @@ class PersonagemController extends Controller
         return view('personagem.ficha', compact('personagem'));
     }
 
-
-
-
-
-
-
     public function destroy($id)
     {
         $personagem = Personagem::find($id);
         $personagem->delete();
         return redirect()->route('dashboard');
+    }
+
+
+    //MAGIAS
+    public function magiaCreate($id)
+    {
+        //dd($id);
+        return view('magia.create', compact('id'));
+    }
+
+    public function storeMagia(MagiaRequest $request, $id)
+    {
+        $personagem = Personagem::findOrFail($id);
+        $personagem->magias()->create($request->validated());
+        return redirect()->route('personagem.show', $id);
     }
 }
