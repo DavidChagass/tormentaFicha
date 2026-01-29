@@ -17,6 +17,9 @@ class FichaPersonagem extends Component
     protected $rules = [
         'dados.nome' => 'nullable|string',
         'dados.nivel' => 'nullable|integer',
+        'dados.raca' => 'nullable|string',
+        'dados.classe' => 'nullable|string',
+        'dados.divindade' => 'nullable|string',
         'dados.forca' => 'nullable|integer',
         'dados.destreza' => 'nullable|integer',
         'dados.constituicao' => 'nullable|integer',
@@ -42,9 +45,11 @@ class FichaPersonagem extends Component
     {
         $this->personagemId = $id;
         $p = Personagem::with(['pericias', 'itens', 'magias', 'ataques'])->findOrFail($id);
-
+        if ($p->pericias->isEmpty()) {
+            $this->gerarPericiasBase($p);
+            $p->load('pericias');
+        }
         $arrayCompleto = $p->toArray();
-        //gambiarra que por algum motivo funciona
         $this->pericias = $arrayCompleto['pericias'] ?? [];
         $this->itens = $arrayCompleto['itens'] ?? [];
         $this->magias = $arrayCompleto['magias'] ?? [];
@@ -53,6 +58,49 @@ class FichaPersonagem extends Component
         $this->dados = collect($arrayCompleto)
             ->except(['pericias', 'itens', 'magias', 'ataques'])
             ->toArray();
+    }
+    private function gerarPericiasBase($personagem)
+    {
+        $lista = [
+            ['Acrobacia+', 'destreza'],
+            ['Adestramento*', 'carisma'],
+            ['Atletismo', 'forca'],
+            ['Atuação', 'carisma'],
+            ['Cavalgar', 'destreza'],
+            ['Conhecimento*', 'inteligencia'],
+            ['Cura', 'sabedoria'],
+            ['Diplomacia', 'carisma'],
+            ['Enganação', 'carisma'],
+            ['Fortitude', 'constituicao'],
+            ['Furtividade+', 'destreza'],
+            ['Guerra*', 'inteligencia'],
+            ['Iniciativa', 'destreza'],
+            ['Intimidação', 'carisma'],
+            ['Intuição', 'sabedoria'],
+            ['Investigação', 'inteligencia'],
+            ['Jogatina*', 'carisma'],
+            ['Ladinagem*+', 'destreza'],
+            ['Luta', 'forca'],
+            ['Misticismo*', 'inteligencia'],
+            ['Nobreza*', 'inteligencia'],
+            ['Ofício*', 'inteligencia'],
+            ['Percepção', 'sabedoria'],
+            ['Pilotagem*', 'destreza'],
+            ['Pontaria', 'destreza'],
+            ['Reflexos', 'destreza'],
+            ['Religião*', 'sabedoria'],
+            ['Sobrevivência', 'sabedoria'],
+            ['Vontade', 'sabedoria']
+        ];
+
+        foreach ($lista as $p) {
+            $personagem->pericias()->create([
+                'nome' => $p[0],
+                'atributo_base' => $p[1],
+                'treinado' => false,
+                'outros_bonus' => 0,
+            ]);
+        }
     }
 
     public function salvar()
@@ -67,7 +115,7 @@ class FichaPersonagem extends Component
             $p->update($dadosParaSalvar);
 
             foreach ($this->pericias as $periciaData) {
-                \DB::table('personagens_pericias')
+                \DB::table('pericias')
                     ->where('id', $periciaData['id'])
                     ->update([
                         'treinado' => $periciaData['treinado'] ? 1 : 0,
@@ -77,7 +125,7 @@ class FichaPersonagem extends Component
 
             if (!empty($this->ataques)) {
                 foreach ($this->ataques as $ataqueData) {
-                    \DB::table('personagens_ataques')
+                    \DB::table('ataques')
                         ->where('id', $ataqueData['id'])
                         ->update([
                             'nome' => $ataqueData['nome'],
@@ -89,7 +137,6 @@ class FichaPersonagem extends Component
 
             session()->flash('status', 'dados salvos');
         } catch (\Exception $e) {
-            //erro pra eu resolver
             session()->flash('error', 'Erro ao salvar: ' . $e->getMessage());
         }
     }
@@ -101,15 +148,13 @@ class FichaPersonagem extends Component
     }
     public function updatedPericias($value, $key)
     {
-        // O $key vem no formato "0.treinado" ou "5.outros_bonus"
-        // Vamos extrair o índice
+
         $parts = explode('.', $key);
         $index = $parts[0];
         $campo = $parts[1];
 
         $pericia = $this->pericias[$index];
 
-        // Salva apenas esta perícia no banco na hora
         \DB::table('pericias')
             ->where('id', $pericia['id'])
             ->update([

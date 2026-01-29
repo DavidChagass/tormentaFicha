@@ -33,6 +33,9 @@ class PersonagemController extends Controller
         return redirect()->route('personagem.show', $personagem->id);
     }
 
+    public function magiaCreate(){
+        return view('magia.create');
+    }
     public function storeMagia(MagiaRequest $request, Personagem $personagem)
     {
         $personagem->magias()->create($request->validated());

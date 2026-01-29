@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ficha Tormenta 20</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;700&display=swap');
 
@@ -15,6 +15,9 @@
             font-family: 'Crimson Pro', serif;
         }
 
+        input:focus {
+            outline: none;
+        }
 
         .pdf-input {
             background: transparent !important;
@@ -36,25 +39,25 @@
             -webkit-appearance: none;
             margin: 0;
         }
+
         input[type=number] {
             -moz-appearance: textfield;
         }
     </style>
-        @livewireStyles
+    @livewireStyles
 
 </head>
 
 <body class="p-4">
 
-    <div
-        @yield('content')
+    <div @yield('content')
         class="max-w-5xl mx-auto bg-[#fdf6e3] text-gray-800 p-8 shadow-2xl rounded-sm border-2 border-[#d1c4ae] relative">
 
         @livewire('ficha-personagem', ['id' => $personagem->id])
     </div>
-    
+
     @livewireScripts
-    
+
 </body>
 
 </html>
