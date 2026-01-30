@@ -56,9 +56,9 @@
                         <span class="text font-bold text-red-800 uppercase">vida</span>
                         <div class="flex justify-center">
                             <input type="number" wire:model.blur="dados.hp_atual"
-                                class="w-8 bg-transparent text-center font-bold"> /
+                                class="w-8 bg-transparent text-center text-lg font-bold"> <strong>/</strong>
                             <input type="number" wire:model.blur="dados.hp_maximo"
-                                class="w-8 bg-transparent text-center">
+                                class="w-8 bg-transparent text-lg text-center">
                         </div>
                     </div>
                     <!-- ESTRESSE -->
@@ -66,20 +66,20 @@
                         <span class="text font-bold text-purple-800 uppercase">estresse</span>
                         <div class="flex justify-center">
                             <input type="number" wire:model.blur="dados.estresse_atual"
-                                class="w-8 bg-transparent text-center font-bold"> /
+                                class="w-8 bg-transparent text-center text-lg font-bold"> <strong>/</strong>
                             <input type="number" wire:model.blur="dados.estresse_maximo"
-                                class="w-8 bg-transparent text-center">
+                                class="w-8 bg-transparent text-lg text-center">
                         </div>
-                        <p class="ml-auto mr-auto text-center text-[11px] w-fit">10+Vontade</p>
+                        <p class="ml-auto mr-auto text-center text-[13px] w-fit">10+Vontade</p>
                     </div>
                     <!-- PM -->
                     <div class="bg-blue-50 p-2 border border-blue-900">
                         <span class="text font-bold text-blue-800 uppercase">mana</span>
                         <div class="flex justify-center">
                             <input type="number" wire:model.blur="dados.mp_atual"
-                                class="w-8 bg-transparent text-center font-bold"> /
+                                class="w-8 bg-transparent text-center text-lg font-bold"> <strong>/</strong>
                             <input type="number" wire:model.blur="dados.mp_maximo"
-                                class="w-8 bg-transparent text-center">
+                                class="w-8 bg-transparent text-lg text-center">
                         </div>
                     </div>
                     <!-- DEFESA -->
@@ -87,9 +87,9 @@
                         <span class="text font-bold text-gray-800 uppercase">defesa </span>
                         <div class="flex justify-center">
                             <input type="number" wire:model.blur="dados.defesa"
-                                class="w-8 bg-transparent text-center font-bold">
+                                class="w-8 bg-transparent text-lg text-center font-bold">
                         </div>
-                        <p class="ml-auto mr-auto text-center text-[11px] w-fit">10+DES+Armadura<br>+Escudo+Outros </p>
+                        <p class="ml-auto mr-auto text-center text-[13px] w-fit">10+DES+Armadura<br>+Escudo+Outros </p>
                     </div>
                 </div>
 
@@ -125,14 +125,14 @@
                                         class="accent-red-800">
                                     <span class="text-xs uppercase font-semibold flex-1">{{ $pericia['nome'] }}</span>
                                     <div class="w-30 text-center bg-red-900 text-white font-bold rounded text-sm mr-4">
-                                        <p class="text-xs px-2">1/2 nivel: <span
-                                                class="pl-[px:2]">{{ floor($dados['nivel'] / 2) }} </span></p>
+                                        <p class="text-sm px-2">1/2 nivel: <span
+                                                class="pl-[px:4]">{{ floor($dados['nivel'] / 2) }} </span></p>
                                     </div>
                                     <label
-                                        class="text-sm font-bold uppercase text-gray-800">{{ substr($pericia['atributo_base'], 0, 3) }}</label>
+                                        class="text-sm font-bold uppercase text-gray-900">{{ substr($pericia['atributo_base'], 0, 3) }}</label>
                                     <input type="number" wire:model.blur="pericias.{{ $idx }}.outros_bonus"
                                         class="w-8 bg-transparent text-center border-b border-gray-400">
-                                    <div class="w-8 text-center bg-red-900 text-white font-bold rounded text-xs">
+                                    <div class="w-8 text-center bg-red-900 text-white font-bold rounded text-base">
                                         {{ floor($dados['nivel'] / 2) + ($dados[$pericia['atributo_base']] ?? 0) + ($pericia['treinado'] ? 2 : 0) + ($pericia['outros_bonus'] ?? 0) }}
                                     </div>
                                 </div>
@@ -155,8 +155,7 @@
                                 <summary class="uppercase p-2 font-bold cursor-pointer text-sm">
                                     {{ $att['nome'] }}
                                 </summary>
-                                <div class="p-2 text-sm text-gray-700 border-t bg-white/80">{{ $att['descricao'] }}
-                                </div>
+                                <textarea class="resize-none bg-white/50 w-full h-fit text-gray-900 text-base" rows="5" disabled>{{ $att['descricao'] }}</textarea>
                                 <a href="{{ route('ataque.edit', $att['id']) }}"
                                     class="ml-2 h-fit bg-yellow-700 text-white px-1 py-1 rounded font-bold hover:bg-yellow-600 transition mb-8">edit</a>
                             </details>
@@ -170,8 +169,8 @@
                             $limite = 10 + $dados['forca'] * 2;
                         @endphp
 
-                        <p class="ml-2">Carga: {{ $cargaAtual }} / {{ $limite }} <span class="text-xs">
-                                (limite de carga = 10 + 2*Força)</span></p>
+                        <p class="ml-2 text-gray-900 text-base">Carga: {{ $cargaAtual }} / {{ $limite }} <span class="text-sm">
+                                (Limite de Carga = 10 + 2*FOR)</span></p>
                         <a href="{{ route('item.create', $personagemId) }}"
                             class="inline-block bg-red-800 text-white px-3 py-1 rounded text-xs font-bold mb-4">Adicionar
                             Item</a>
@@ -180,10 +179,10 @@
                                 class="bg-white/50 border border-red-900/20 rounded">
                                 <summary class=" uppercase p-2 font-bold cursor-pointer text-sm">{{ $item['nome'] }}
                                     ({{ $item['quantidade'] }}x)
-                                    - Peso:{{ $item['peso'] }} </summary>
+                                    - Peso: {{ $item['peso'] }}</summary>
 
-                                <div class="p-2 text-xs text-gray-700 border-t bg-white/80">{{ $item['descricao'] }}
-                                </div>
+                                <textarea class="resize-none bg-white/50 w-full h-fit text-base text-gray-900" rows="5" disabled>{{ $item['descricao'] }}</textarea>
+
                                 <a href="{{ route('item.edit', $item['id']) }}"
                                     class="ml-2 h-fit bg-yellow-700 text-white px-1 py-1 rounded font-bold hover:bg-yellow-600 transition mb-8">edit</a>
                             </details>
@@ -194,7 +193,7 @@
 
                     <!-- MAGIAS -->
                     <div x-show="tab === 'magias'" class="space-y-2">
-                        <p class="ml-2 text-sm">Teste de resistencia: {{ 10 + floor($dados['nivel'] / 2) }} + mod
+                        <p class="ml-2 text-base text-gray-900">Teste de Resistencia: {{ 10 + floor($dados['nivel'] / 2) }} + mod
                             atributo-chave <span class="text-xs">
                                 (10+1/2nivel + mod atributo-chave)</span></p>
                         <a href="{{ route('magia.create', $personagemId) }}"
@@ -206,12 +205,12 @@
                                     {{ $magia['nome'] }} - <span class="text-xs">{{ $magia['circulo'] }}º
                                         Círculo</span>
                                 </summary>
-                                <div class="p-2 text-sm">
-                                    <p class="italic mb-2 text-blue-900">Escola: {{ $magia['escola'] }} |
-                                        Exec: {{ $magia['execucao'] }} | Duração: {{ $magia['duracao'] }} | Alcance:
+                                <div class="p-2 text-base text-gray-900 bg-blue-50">
+                                    <p class="italic mb-2 text-indigo-800">Escola: {{ $magia['escola'] }} |
+                                        Execução: {{ $magia['execucao'] }} | Duração: {{ $magia['duracao'] }} | Alcance:
                                         {{ $magia['alvo'] }} | Alvo: {{ $magia['alvo'] }} | Resistencia:
                                         {{ $magia['resistencia'] }}</p>
-                                    {{ $magia['descricao'] }}
+                                    <textarea class="resize-none w-full h-fit" rows="10" disabled>{{$magia['descricao']}}</textarea>
                                 </div>
                                 <a href="{{ route('magia.edit', $magia['id']) }}"
                                     class="ml-2 bg-yellow-700 text-white px-1 py-1 rounded font-bold hover:bg-yellow-600 transition mb-8">edit</a>
@@ -222,7 +221,7 @@
                     <!-- DESCRIÇÃO -->
                     <div x-show="tab === 'desc'">
                         <textarea wire:model.blur="dados.descricao" rows="10"
-                            class="w-full p-2 bg-transparent border-2 border-dashed border-red-900/30 rounded focus:outline-none"></textarea>
+                            class="w-full text-base text-gray-900 p-2 bg-transparent border-2 border-dashed border-red-900/30 rounded focus:outline-none"></textarea>
                     </div>
 
                 </div>
