@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('personagem_id')->constrained('personagens')->onDelete('cascade');
             $table->string('nome');
-            $table->integer('circulo');
-            $table->string('escola');
-            $table->string('execucao');
-            $table->string('alcance');
-            $table->string('alvo');
-            $table->string('duracao');
+            $table->integer('circulo')->nullable();
+            $table->string('escola')->nullable();
+            $table->string('execucao')->nullable();
+            $table->string('alcance')->nullable();
+            $table->string('alvo')->nullable();
+            $table->string('duracao')->nullable();
             $table->string('resistencia')->nullable();
             $table->longText('descricao')->nullable();
         });

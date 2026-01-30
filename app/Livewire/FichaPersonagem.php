@@ -14,7 +14,6 @@ class FichaPersonagem extends Component
     public array $itens = [];
     public array $magias = [];
     public array $ataques = [];
-
     protected $rules = [
         'dados.nome' => 'nullable|string',
         'dados.nivel' => 'nullable|integer',
@@ -151,6 +150,16 @@ class FichaPersonagem extends Component
         }
     }
 
+    public function getCargaTotal()
+    {
+        $total = 0;
+        foreach ($this->itens as $item) {
+            $peso = $item['peso'] ?? 0;
+            $quantidade = $item['quantidade'] ?? 1;
+            $total += ($peso * $quantidade);
+        }
+        return $total;
+    }
 
     public function render()
     {

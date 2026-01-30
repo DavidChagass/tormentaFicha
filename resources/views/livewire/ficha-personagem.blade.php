@@ -1,6 +1,6 @@
 <div>
     <div class="max-w-5xl mx-auto p-4 bg-[#f4ebd0] text-gray-900 border-2 border-red-900 shadow-2xl"
-        wire:poll.60s="salvar" x-data="{ tab: 'pericias' }">{{-- WIRE:POLL DEIXAR EM 60, DEPENDENDO EU REDUZO PRA 20, OU 15 --}}
+        wire:poll.35s="salvar" x-data="{ tab: 'pericias' }">{{-- WIRE:POLL DEIXAR EM 60, DEPENDENDO EU REDUZO PRA 20, OU 15 --}}
 
         <!-- CABEÇALHO -->
         <div class="flex justify-between items-center mb-6 bg-[#f4ebd0] p-4 border-b-4 border-red-900 sticky top-0 z-50">
@@ -20,7 +20,7 @@
                 </div>
                 <div class="border-l-2 pl-2 border-red-900">
                     <label class="text font-bold uppercase text-[12px] block text-red-800">Classe</label>
-                    <input type="text" wire:model.blur="dados.classe" class="w-24 bg-transparent font-bold">
+                    <input type="text" wire:model.blur="dados.classe" class="w-32 bg-transparent font-bold">
                 </div>
                 <div class="border-l-2 pl-2 border-red-900">
                     <label class="text font-bold uppercase text-[12px] block text-red-800">Divindade</label>
@@ -83,11 +83,12 @@
                     </div>
                     <!-- DEFESA -->
                     <div class="bg-gray-100 p-2 border border-gray-900">
-                        <span class="text font-bold text-gray-800 uppercase">defesa</span>
+                        <span class="text font-bold text-gray-800 uppercase">defesa </span>
                         <div class="flex justify-center">
                             <input type="number" wire:model.blur="dados.defesa"
                                 class="w-8 bg-transparent text-center font-bold">
                         </div>
+                        <small class="text-[11px]">10+DES+Armadura+Escudo+Outros</small>
                     </div>
                 </div>
 
@@ -157,20 +158,37 @@
 
                     <!-- ITENS -->
                     <div x-show="tab === 'itens'" class="space-y-2">
+                        @php
+                            $cargaAtual = $this->getCargaTotal();
+                            $limite = 10 + $dados['forca'] * 2;
+                        @endphp
+
+                        <p class="ml-2">Carga: {{ $cargaAtual }} / {{ $limite }} <span class="text-xs">
+                                (limite de carga = 10 + 2*Força)</span></p>
+                        <a href="{{ route('item.create', $personagemId) }}"
+                            class="inline-block bg-red-800 text-white px-3 py-1 rounded text-xs font-bold mb-4">Adicionar
+                            Item</a>
                         @foreach ($itens as $item)
                             <details wire:key="item-{{ $item['id'] }}"
                                 class="bg-white/50 border border-red-900/20 rounded">
                                 <summary class="p-2 font-bold cursor-pointer text-sm">{{ $item['nome'] }}
                                     ({{ $item['quantidade'] }}x)
-                                </summary>
+                                    - Peso:{{ $item['peso'] }}                                </summary>
+
                                 <div class="p-2 text-xs text-gray-700 border-t bg-white/80">{{ $item['descricao'] }}
                                 </div>
+                                <a href="{{ route('item.edit', $item['id']) }}"
+                                    class="ml-2 h-fit bg-yellow-700 text-white px-1 py-1 rounded font-bold hover:bg-yellow-600 transition mb-8">edit</a>
                             </details>
                         @endforeach
+
+
                     </div>
 
                     <!-- MAGIAS -->
                     <div x-show="tab === 'magias'" class="space-y-2">
+                        <p class="ml-2 text-sm">Teste de resistencia: {{10 + floor($dados['nivel'] / 2) }} + mod atributo-chave <span class="text-xs">
+                                (10+1/2nivel + mod atributo-chave)</span></p>
                         <a href="{{ route('magia.create', $personagemId) }}"
                             class="inline-block bg-red-800 text-white px-3 py-1 rounded text-xs font-bold mb-4">Adicionar
                             Magia</a>
@@ -187,7 +205,7 @@
                                         {{ $magia['resistencia'] }}</p>
                                     {{ $magia['descricao'] }}
                                 </div>
-                                <a href="{{route('magia.edit', $magia['id'] )}}"
+                                <a href="{{ route('magia.edit', $magia['id']) }}"
                                     class="ml-2 bg-yellow-700 text-white px-1 py-1 rounded font-bold hover:bg-yellow-600 transition mb-8">edit</a>
                             </details>
                         @endforeach

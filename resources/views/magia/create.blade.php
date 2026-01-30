@@ -12,32 +12,41 @@
     <div>
         <form action="{{ route('magia.store', $id) }}" method="POST">
             @csrf
-            <div>
+                <div>
+                <label for="nome">Nome</label>
                 <input type="text" name="nome" placeholder="nome" required>
             </div>
             <div>
+                <label for="circulo">Circulo</label>
                 <input type="number" name="circulo" placeholder="circulo" required>
             </div>
             <div>
+                <label for="escola">Escola</label>
                 <input type="text" name="escola" placeholder="escola" required>
             </div>
             <div>
+                <label for="execucao">Execucao</label>
                 <input type="text" name="execucao" placeholder="execucao" required>
             </div>
             <div>
+                <label for="alcance">Alacance</label>
                 <input type="text" name="alcance" placeholder="alcance" required>
             </div>
             <div>
-                <input type="text" name="alvo" placeholder="alvo" required>
+                <label for="alvo">Alvo</label>
+                <input type="text" name="alvo" placeholder="alvo" value="" required>
             </div>
             <div>
+                <label for="duracao">Duracao</label>
                 <input type="text" name="duracao" placeholder="duracao" required>
             </div>
             <div>
-                <input type="text" name="resistencia" placeholder="resistencia" required>
+                <label for="resistencia">Resistencia</label>
+                <input type="text" name="resistencia" placeholder="resistencia"  required>
             </div>
             <div>
-                <textarea rows="10" cols="20" name="descricao" placeholder="melhorias de magia, etc"></textarea>
+                <label for="descricao">Descricao</label>
+                <textarea rows="10" cols="20" name="descricao" placeholder="melhorias de magia, etc" ></textarea>
             </div>
 
             <button type="submit">criar magia</button>
