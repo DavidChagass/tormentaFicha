@@ -145,7 +145,7 @@ class FichaPersonagem extends Component
 
     public function getCargaTotal()
     {
-        return collect($this->itens)->sum(fn($i) => ($i['peso'] ?? 0) * ($i['quantidade'] ?? 1));
+        return collect($this->itens)->sum(fn($i) => ($i['peso'] ?? 0.0) * ($i['quantidade'] ?? 1));
     }
 
     public function render()

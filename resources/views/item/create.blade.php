@@ -75,7 +75,7 @@
 
                 <div class="w-fit h-fit">
                     <label class="text font-bold uppercase text-[12px] block text-red-800" for="peso">Peso</label>
-                    <input type="number" name="peso" placeholder="peso" required
+                    <input type="number" step="0.1" name="peso" placeholder="peso" required
                         class="w-fit bg-transparent border border-2 border-red-800 rounded font-bold">
                 </div>
                 <div class="h-fit">

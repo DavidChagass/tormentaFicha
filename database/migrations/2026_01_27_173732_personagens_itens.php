@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('personagem_id')->constrained('personagens')->onDelete('cascade');
             $table->string('nome');
             $table->integer('quantidade')->default(1);
-            $table->integer('peso')->default(1);
+            $table->double('peso')->default(1.0);
             $table->longText('descricao')->nullable();
         });
     }

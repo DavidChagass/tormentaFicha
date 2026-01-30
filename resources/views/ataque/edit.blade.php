@@ -69,7 +69,7 @@
                 <div class="h-fit">
                     <label class="text font-bold uppercase text-[12px] block text-red-800"
                         for="descricao">Descricao</label>
-                    <textarea rows="5" cols="20" name="descricao" placeholder="itens em geral, dinheiro"
+                    <textarea rows="5" cols="20" name="descricao" placeholder="ataques, habilidades, passivas de combate"
                         class="w-full p-2 bg-transparent border-2 border-dashed border-red-900/30 rounded focus:outline-none">{{ $ataque->descricao }}</textarea>
                 </div>
 

@@ -1,6 +1,6 @@
 <div>
     <div class="max-w-5xl mx-auto p-4 bg-[#f4ebd0] text-gray-900 border-2 border-red-900 shadow-2xl"
-        wire:poll.35s="salvar" x-data="{ tab: 'pericias' }">{{-- WIRE:POLL DEIXAR EM 60, DEPENDENDO EU REDUZO PRA 20, OU 15 --}}
+        wire:poll.50s="salvar" x-data="{ tab: 'pericias' }">{{-- WIRE:POLL DEIXAR EM 60, DEPENDENDO EU REDUZO PRA 20, OU 15 --}}
 
         <!-- CABEÇALHO -->
         <div class="flex justify-between items-center mb-6 bg-[#f4ebd0] p-4 border-b-4 border-red-900 sticky top-0 z-50">
@@ -169,7 +169,9 @@
                             $limite = 10 + $dados['forca'] * 2;
                         @endphp
 
-                        <p class="ml-2 text-gray-900 text-base">Carga: {{ $cargaAtual }} / {{ $limite }} <span class="text-sm">
+                        <p class="ml-2 text-gray-900 text-base">Carga: Carga:
+                            {{ number_format($cargaAtual, 1, ',', '.') }} / {{ $limite }} <span
+                                class="text-sm">
                                 (Limite de Carga = 10 + 2*FOR)</span></p>
                         <a href="{{ route('item.create', $personagemId) }}"
                             class="inline-block bg-red-800 text-white px-3 py-1 rounded text-xs font-bold mb-4">Adicionar
@@ -179,7 +181,8 @@
                                 class="bg-white/50 border border-red-900/20 rounded">
                                 <summary class=" uppercase p-2 font-bold cursor-pointer text-sm">{{ $item['nome'] }}
                                     ({{ $item['quantidade'] }}x)
-                                    - Peso: {{ $item['peso'] }}</summary>
+                                    - Peso: {{ number_format($item['peso'] * $item['quantidade'], 1, ',', '.') }}
+                                </summary>
 
                                 <textarea class="resize-none bg-white/50 w-full h-fit text-base text-gray-900" rows="5" disabled>{{ $item['descricao'] }}</textarea>
 
@@ -193,7 +196,8 @@
 
                     <!-- MAGIAS -->
                     <div x-show="tab === 'magias'" class="space-y-2">
-                        <p class="ml-2 text-base text-gray-900">Teste de Resistencia: {{ 10 + floor($dados['nivel'] / 2) }} + mod
+                        <p class="ml-2 text-base text-gray-900">Teste de Resistencia:
+                            {{ 10 + floor($dados['nivel'] / 2) }} + mod
                             atributo-chave <span class="text-xs">
                                 (10+1/2nivel + mod atributo-chave)</span></p>
                         <a href="{{ route('magia.create', $personagemId) }}"
@@ -207,10 +211,11 @@
                                 </summary>
                                 <div class="p-2 text-base text-gray-900 bg-blue-50">
                                     <p class="italic mb-2 text-indigo-800">Escola: {{ $magia['escola'] }} |
-                                        Execução: {{ $magia['execucao'] }} | Duração: {{ $magia['duracao'] }} | Alcance:
+                                        Execução: {{ $magia['execucao'] }} | Duração: {{ $magia['duracao'] }} |
+                                        Alcance:
                                         {{ $magia['alvo'] }} | Alvo: {{ $magia['alvo'] }} | Resistencia:
                                         {{ $magia['resistencia'] }}</p>
-                                    <textarea class="resize-none w-full h-fit" rows="10" disabled>{{$magia['descricao']}}</textarea>
+                                    <textarea class="resize-none w-full h-fit" rows="10" disabled>{{ $magia['descricao'] }}</textarea>
                                 </div>
                                 <a href="{{ route('magia.edit', $magia['id']) }}"
                                     class="ml-2 bg-yellow-700 text-white px-1 py-1 rounded font-bold hover:bg-yellow-600 transition mb-8">edit</a>

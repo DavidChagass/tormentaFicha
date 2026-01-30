@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <title>Editar Item</title>
     <style>
@@ -64,26 +64,28 @@
                 @method('PUT')
                 <div>
                     <label class="text font-bold uppercase text-[12px] block text-red-800">Nome</label>
-                    <input type="text" name="nome" placeholder="Nome" value="{{$item->nome}}"
+                    <input type="text" name="nome" placeholder="Nome" value="{{ $item->nome }}"
                         class="w-fit bg-transparent border border-2 border-red-800 rounded font-bold">
                 </div>
                 <div>
                     <label class="text font-bold uppercase text-[12px] block text-red-800"
                         for="quantidade">Quantidade</label>
-                    <input type="number" name="quantidade" placeholder="quantidade" required value="{{$item->quantidade}}"
+                    <input type="number" name="quantidade" placeholder="quantidade" required
+                        value="{{ $item->quantidade }}"
                         class="w-fit bg-transparent border border-2 border-red-800 rounded font-bold w-fit">
                 </div>
 
                 <div class="w-fit h-fit">
                     <label class="text font-bold uppercase text-[12px] block text-red-800" for="peso">Peso</label>
-                    <input type="number" name="peso" placeholder="peso" required value="{{$item->peso}}"
+                    <input type="number" name="peso" step="0.1" placeholder="peso" required
+                        value="{{ $item->peso }}"
                         class="w-fit bg-transparent border border-2 border-red-800 rounded font-bold">
                 </div>
                 <div class="h-fit">
                     <label class="text font-bold uppercase text-[12px] block text-red-800"
                         for="descricao">Descricao</label>
                     <textarea rows="5" cols="20" name="descricao" placeholder="itens em geral, dinheiro"
-                        class="w-full p-2 bg-transparent border-2 border-dashed border-red-900/30 rounded focus:outline-none">{{$item->descricao}}</textarea>
+                        class="w-full p-2 bg-transparent border-2 border-dashed border-red-900/30 rounded focus:outline-none">{{ $item->descricao }}</textarea>
                 </div>
 
 
@@ -93,10 +95,12 @@
         </div>
 
         </form>
-        <form class="content-center justify-items-center justify-self-center w-fit ml-auto mr-auto"  action="{{ route('item.delete', $item->id) }}" method="POST">
+        <form class="content-center justify-items-center justify-self-center w-fit ml-auto mr-auto"
+            action="{{ route('item.delete', $item->id) }}" method="POST">
             @csrf
             @method('DELETE')
-            <button class=" bg-red-900 text-white px-3 py-1 rounded font-bold hover:bg-red-800 transition" type="submit">DELETAR ITEM</button>
+            <button class=" bg-red-900 text-white px-3 py-1 rounded font-bold hover:bg-red-800 transition"
+                type="submit">DELETAR ITEM</button>
         </form>
     </div>
 
