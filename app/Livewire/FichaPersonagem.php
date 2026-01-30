@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\Personagem as Personagem;
+use App\Models\Personagem;
 use Illuminate\Support\Facades\DB;
 
 class FichaPersonagem extends Component
@@ -14,6 +14,7 @@ class FichaPersonagem extends Component
     public array $itens = [];
     public array $magias = [];
     public array $ataques = [];
+
     protected $rules = [
         'dados.nome' => 'nullable|string',
         'dados.nivel' => 'nullable|integer',
@@ -32,33 +33,30 @@ class FichaPersonagem extends Component
         'dados.mp_maximo' => 'nullable|integer',
         'dados.descricao' => 'nullable|string',
         'dados.defesa' => 'nullable|integer',
-
         'pericias.*.treinado' => 'boolean',
         'pericias.*.outros_bonus' => 'nullable|integer',
-
         'ataques.*.nome' => 'nullable|string|max:255',
         'ataques.*.descricao' => 'nullable|string',
     ];
-
 
     public function mount($id)
     {
         $this->personagemId = $id;
         $p = Personagem::with(['pericias', 'itens', 'magias', 'ataques'])->findOrFail($id);
+
         if ($p->pericias->isEmpty()) {
             $this->gerarPericiasBase($p);
-            $p->load('pericias');
+            $p->refresh();
         }
+
         $arrayCompleto = $p->toArray();
         $this->pericias = $arrayCompleto['pericias'] ?? [];
         $this->itens = $arrayCompleto['itens'] ?? [];
         $this->magias = $arrayCompleto['magias'] ?? [];
         $this->ataques = $arrayCompleto['ataques'] ?? [];
-
-        $this->dados = collect($arrayCompleto)
-            ->except(['pericias', 'itens', 'magias', 'ataques'])
-            ->toArray();
+        $this->dados = collect($arrayCompleto)->except(['pericias', 'itens', 'magias', 'ataques'])->toArray();
     }
+
     private function gerarPericiasBase($personagem)
     {
         $lista = [
@@ -93,16 +91,18 @@ class FichaPersonagem extends Component
             ['Vontade', 'sabedoria']
         ];
 
+        $dadosParaInserir = [];
         foreach ($lista as $p) {
-            $personagem->pericias()->create([
+            $dadosParaInserir[] = [
+                'personagem_id' => $personagem->id,
                 'nome' => $p[0],
                 'atributo_base' => $p[1],
                 'treinado' => false,
                 'outros_bonus' => 0,
-            ]);
+            ];
         }
+        DB::table('pericias')->insert($dadosParaInserir);
     }
-
 
     public function updated($propertyName, $value)
     {
@@ -118,7 +118,7 @@ class FichaPersonagem extends Component
             $id = $this->pericias[$index]['id'];
 
             DB::table('pericias')->where('id', $id)->update([
-                $campo => ($campo === 'treinado') ? ($value ? 1 : 0) : $value
+                $campo => ($campo === 'treinado') ? ($value ? 1 : 0) : ($value ?? 0)
             ]);
         }
 
@@ -135,49 +135,23 @@ class FichaPersonagem extends Component
     public function salvar()
     {
         try {
-            $p = Personagem::find($this->personagemId);
-            $p->update(collect($this->dados)->except(['pericias', 'itens', 'magias', 'ataques'])->toArray());
+            DB::table('personagens')
+                ->where('id', $this->personagemId)
+                ->update(collect($this->dados)->except(['pericias', 'itens', 'magias', 'ataques'])->toArray());
 
-            foreach ($this->pericias as $periciaData) {
-                DB::table('pericias')->where('id', $periciaData['id'])->update([
-                    'treinado' => $periciaData['treinado'] ? 1 : 0,
-                    'outros_bonus' => intval($periciaData['outros_bonus'] ?? 0)
-                ]);
-            }
-            session()->flash('status', 'dados salvos');
+            session()->flash('status', 'Sincronizado');
         } catch (\Exception $e) {
-            session()->flash('error', 'Erro: ' . $e->getMessage());
+            session()->flash('error', 'Erro ao sincronizar');
         }
     }
 
     public function getCargaTotal()
     {
-        $total = 0;
-        foreach ($this->itens as $item) {
-            $peso = $item['peso'] ?? 0;
-            $quantidade = $item['quantidade'] ?? 1;
-            $total += ($peso * $quantidade);
-        }
-        return $total;
+        return collect($this->itens)->sum(fn($i) => ($i['peso'] ?? 0) * ($i['quantidade'] ?? 1));
     }
 
     public function render()
     {
         return view('livewire.ficha-personagem');
-    }
-    public function updatedPericias($value, $key)
-    {
-
-        $parts = explode('.', $key);
-        $index = $parts[0];
-        $campo = $parts[1];
-
-        $pericia = $this->pericias[$index];
-
-        \DB::table('pericias')
-            ->where('id', $pericia['id'])
-            ->update([
-                $campo => ($campo === 'treinado') ? ($value ? 1 : 0) : $value
-            ]);
     }
 }

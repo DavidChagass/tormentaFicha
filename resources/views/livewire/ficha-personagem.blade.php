@@ -150,7 +150,7 @@
                                 class="flex gap-2 border-b p-2 items-center bg-white/30 rounded">
                                 <input type="text" wire:model.blur="ataques.{{ $att }}.nome"
                                     class="w-full bg-transparent font-bold">
-                                <textarea wire:model.blur="ataques.{{ $att }}.nome" rows="10"
+                                <textarea wire:model.blur="ataques.{{ $att }}.descricao" rows="10"
                                     class="w-full p-2 bg-transparent border-2 border-dashed border-red-900/30 rounded focus:outline-none"></textarea>
                             </div>
                         @endforeach
