@@ -35,8 +35,6 @@ class FichaPersonagem extends Component
         'dados.defesa' => 'nullable|integer',
         'pericias.*.treinado' => 'boolean',
         'pericias.*.outros_bonus' => 'nullable|integer',
-        'ataques.*.nome' => 'nullable|string|max:255',
-        'ataques.*.descricao' => 'nullable|string',
     ];
 
     public function mount($id)

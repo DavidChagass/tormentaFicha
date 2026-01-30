@@ -99,7 +99,7 @@
                         class="px-4 py-1 text-xs uppercase font-bold transition">Perícias</button>
                     <button @click="tab = 'ataques'"
                         :class="tab === 'ataques' ? 'bg-red-900 text-white' : 'text-gray-500'"
-                        class="px-4 py-1 text-xs uppercase font-bold transition">Ataques</button>
+                        class="px-4 py-1 text-xs uppercase font-bold transition">Ataques/Habilidades</button>
                     <button @click="tab = 'itens'"
                         :class="tab === 'itens' ? 'bg-red-900 text-white' : 'text-gray-500'"
                         class="px-4 py-1 text-xs uppercase font-bold transition">Itens</button>
@@ -145,14 +145,20 @@
 
                     <!-- ATAQUES -->
                     <div x-show="tab === 'ataques'" class="space-y-2">
-                        @foreach ($ataques as $att => $ataque)
-                            <div wire:key="ataque-{{ $ataque['id'] }}"
-                                class="flex gap-2 border-b p-2 items-center bg-white/30 rounded">
-                                <input type="text" wire:model.blur="ataques.{{ $att }}.nome"
-                                    class="w-full bg-transparent font-bold">
-                                <textarea wire:model.blur="ataques.{{ $att }}.descricao" rows="10"
-                                    class="w-full p-2 bg-transparent border-2 border-dashed border-red-900/30 rounded focus:outline-none"></textarea>
-                            </div>
+                        <a href="{{ route('ataque.create', $personagemId) }}"
+                            class="inline-block bg-red-800 text-white px-3 py-1 rounded text-xs font-bold mb-4">Adicionar
+                            Ataque/Habilidade</a>
+                        @foreach ($ataques as $att)
+                            <details wire:key="ataque-{{ $att['id'] }}"
+                                class="bg-white/50 border border-red-900/20 rounded">
+                                <summary class="p-2 font-bold cursor-pointer text-sm">
+                                    {{ $att['nome'] }}
+                                </summary>
+                                <div class="p-2 text-sm text-gray-700 border-t bg-white/80">{{ $att['descricao'] }}
+                                </div>
+                                <a href="{{ route('ataque.edit', $att['id']) }}"
+                                    class="ml-2 h-fit bg-yellow-700 text-white px-1 py-1 rounded font-bold hover:bg-yellow-600 transition mb-8">edit</a>
+                            </details>
                         @endforeach
                     </div>
 
@@ -173,7 +179,7 @@
                                 class="bg-white/50 border border-red-900/20 rounded">
                                 <summary class="p-2 font-bold cursor-pointer text-sm">{{ $item['nome'] }}
                                     ({{ $item['quantidade'] }}x)
-                                    - Peso:{{ $item['peso'] }}                                </summary>
+                                    - Peso:{{ $item['peso'] }} </summary>
 
                                 <div class="p-2 text-xs text-gray-700 border-t bg-white/80">{{ $item['descricao'] }}
                                 </div>
@@ -187,7 +193,8 @@
 
                     <!-- MAGIAS -->
                     <div x-show="tab === 'magias'" class="space-y-2">
-                        <p class="ml-2 text-sm">Teste de resistencia: {{10 + floor($dados['nivel'] / 2) }} + mod atributo-chave <span class="text-xs">
+                        <p class="ml-2 text-sm">Teste de resistencia: {{ 10 + floor($dados['nivel'] / 2) }} + mod
+                            atributo-chave <span class="text-xs">
                                 (10+1/2nivel + mod atributo-chave)</span></p>
                         <a href="{{ route('magia.create', $personagemId) }}"
                             class="inline-block bg-red-800 text-white px-3 py-1 rounded text-xs font-bold mb-4">Adicionar

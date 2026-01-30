@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AtaqueRequest;
 use App\Http\Requests\ItemRequest;
 use App\Http\Requests\MagiaRequest;
 use App\Http\Requests\personagemRequest;
+use App\Models\Ataques;
 use App\Models\Personagem;
 use App\Models\PersonagemItem;
 use App\Models\PersonagemMagia;
@@ -126,13 +128,37 @@ class PersonagemController extends Controller
 
 
     //ATAQUE
-    public function createAtaque() {}
+    public function createAtaque($id)
+    {
+        return view('ataque.create', compact('id'));
+    }
 
-    public function storeAtaque() {}
+    public function storeAtaque(AtaqueRequest $request, $id)
+    {
+        $personagem = Personagem::findOrFail($id);
+        $personagem->ataques()->create($request->validated());
+        return redirect()->route('personagem.show', $id);
+    }
 
-    public function editAtaque() {}
+    public function editAtaque($id)
+    {
+        $ataque = Ataques::findOrFail($id);
+        return view('ataque.edit', compact('ataque'));
+    }
 
-    public function updateAtaque() {}
+    public function updateAtaque(AtaqueRequest $request, $id)
+    {
+        $item = Ataques::findOrFail($id);
+        $personagem_id = $item->personagem_id;
+        $item->update($request->validated());
+        return redirect()->route('personagem.show', $personagem_id);
+    }
 
-    public function destroyAtaque() {}
+    public function destroyAtaque($id)
+    {
+        $ataque = Ataques::find($id);
+        $personagem_id = $ataque->personagem_id;
+        $ataque->delete();
+        return redirect()->route('personagem.show', $personagem_id);
+    }
 }
