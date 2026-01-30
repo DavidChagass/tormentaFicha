@@ -87,7 +87,7 @@
                 </div>
                 <div>
                     <label class="text font-bold uppercase text-[12px] block text-red-800"
-                        for="alcance">Alacance</label>
+                        for="alcance">Alcance</label>
                     <input class="w-fit bg-transparent border border-2 border-red-800 rounded font-bold" type="text"
                         name="alcance" placeholder="alcance" required value="{{ $magia->alcance }}">
                 </div>

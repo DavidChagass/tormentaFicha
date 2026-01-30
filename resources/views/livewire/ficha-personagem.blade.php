@@ -70,6 +70,7 @@
                             <input type="number" wire:model.blur="dados.estresse_maximo"
                                 class="w-8 bg-transparent text-center">
                         </div>
+                        <p class="ml-auto mr-auto text-center text-[11px] w-fit">10+Vontade</p>
                     </div>
                     <!-- PM -->
                     <div class="bg-blue-50 p-2 border border-blue-900">
@@ -88,7 +89,7 @@
                             <input type="number" wire:model.blur="dados.defesa"
                                 class="w-8 bg-transparent text-center font-bold">
                         </div>
-                        <small class="text-[11px]">10+DES+Armadura+Escudo+Outros</small>
+                        <p class="ml-auto mr-auto text-center text-[11px] w-fit">10+DES+Armadura<br>+Escudo+Outros </p>
                     </div>
                 </div>
 
@@ -151,7 +152,7 @@
                         @foreach ($ataques as $att)
                             <details wire:key="ataque-{{ $att['id'] }}"
                                 class="bg-white/50 border border-red-900/20 rounded">
-                                <summary class="p-2 font-bold cursor-pointer text-sm">
+                                <summary class="uppercase p-2 font-bold cursor-pointer text-sm">
                                     {{ $att['nome'] }}
                                 </summary>
                                 <div class="p-2 text-sm text-gray-700 border-t bg-white/80">{{ $att['descricao'] }}
@@ -177,7 +178,7 @@
                         @foreach ($itens as $item)
                             <details wire:key="item-{{ $item['id'] }}"
                                 class="bg-white/50 border border-red-900/20 rounded">
-                                <summary class="p-2 font-bold cursor-pointer text-sm">{{ $item['nome'] }}
+                                <summary class=" uppercase p-2 font-bold cursor-pointer text-sm">{{ $item['nome'] }}
                                     ({{ $item['quantidade'] }}x)
                                     - Peso:{{ $item['peso'] }} </summary>
 
@@ -201,14 +202,14 @@
                             Magia</a>
                         @foreach ($magias as $magia)
                             <details class="mb-2 border-l-4 border-blue-800">
-                                <summary class="p-2 font-bold cursor-pointer bg-blue-50">
+                                <summary class="uppercase p-2 font-bold cursor-pointer bg-blue-50">
                                     {{ $magia['nome'] }} - <span class="text-xs">{{ $magia['circulo'] }}º
                                         Círculo</span>
                                 </summary>
                                 <div class="p-2 text-sm">
                                     <p class="italic mb-2 text-blue-900">Escola: {{ $magia['escola'] }} |
-                                        Exec: {{ $magia['execucao'] }} | Dur: {{ $magia['duracao'] }} | Alc:
-                                        {{ $magia['alvo'] }} | Alvo: {{ $magia['alvo'] }} | Resist:
+                                        Exec: {{ $magia['execucao'] }} | Duração: {{ $magia['duracao'] }} | Alcance:
+                                        {{ $magia['alvo'] }} | Alvo: {{ $magia['alvo'] }} | Resistencia:
                                         {{ $magia['resistencia'] }}</p>
                                     {{ $magia['descricao'] }}
                                 </div>
