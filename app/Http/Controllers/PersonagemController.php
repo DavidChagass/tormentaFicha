@@ -57,108 +57,118 @@ class PersonagemController extends Controller
 
 
     //MAGIAS
-    public function createMagia($id)
+    public function createMagia($id, $tab)
     {
-        return view('magia.create', compact('id'));
+        return view('magia.create', compact('id', 'tab'));
     }
 
-    public function storeMagia(MagiaRequest $request, $id)
+    public function storeMagia(MagiaRequest $request, $id, $tab)
     {
         $personagem = Personagem::findOrFail($id);
         $personagem->magias()->create($request->validated());
-        return redirect()->route('personagem.show', $id);
+        return redirect()->route('personagem.show', ['id' => $id, 'tab' => $tab]);
     }
-    public function editMagia($id)
+    public function editMagia($id, $tab)
     {
         $magia = PersonagemMagia::findOrFail($id);
-        return view('magia.edit', compact('magia'));
+        return view('magia.edit', compact('magia', 'tab'));
     }
 
-    public function updateMagia(MagiaRequest $request, $id)
+    public function updateMagia(MagiaRequest $request, $id, $tab)
     {
         $magia = PersonagemMagia::findOrFail($id);
         $personagem_id = $magia->personagem_id;
         $magia->update($request->validated());
-        return redirect()->route('personagem.show', $personagem_id);
+        return redirect()->route('personagem.show', ['id' => $personagem_id, 'tab' =>$tab]);
     }
 
-    public function destroyMagia($id)
+    public function destroyMagia($id, $tab)
     {
         $magia = PersonagemMagia::find($id);
         $id =  $magia->personagem_id;
         $magia->delete();
-
-        return redirect()->route('personagem.show', $id);
+        return redirect()->route('personagem.show', ['id' => $id, 'tab' =>$tab]);
     }
+
+
 
     //ITEM
-    public function createItem($id)
+    public function createItem($id, $tab)
     {
-        return view('item.create', compact('id'));
+        return view('item.create', compact('id', 'tab'));
     }
 
-    public function storeItem(ItemRequest $request, $id)
+    public function storeItem(ItemRequest $request, $id, $tab)
     {
         $personagem = Personagem::findOrFail($id);
         $personagem->itens()->create($request->validated());
-        return redirect()->route('personagem.show', $id);
+        return redirect()->route('personagem.show', ['id' => $id, 'tab' => $tab]);
     }
 
-    public function editItem($id)
+    public function editItem($id, $tab)
     {
         $item = PersonagemItem::findOrFail($id);
-        return view('item.edit', compact('item'));
+        return view('item.edit', compact('item', 'tab'));
     }
 
-    public function updateItem(ItemRequest $request, $id)
+    public function updateItem(ItemRequest $request, $id, $tab)
     {
         $item = PersonagemItem::findOrFail($id);
         $personagem_id = $item->personagem_id;
         $item->update($request->validated());
-        return redirect()->route('personagem.show', $personagem_id);
+        return redirect()->route('personagem.show', ['id' => $personagem_id, 'tab' => $tab]);
     }
 
-    public function destroyItem($id)
+    public function destroyItem($id, $tab)
     {
         $item = PersonagemItem::find($id);
         $personagem_id = $item->personagem_id;
         $item->delete();
-        return redirect()->route('personagem.show', $personagem_id);
+        return redirect()->route('personagem.show', ['id' => $personagem_id, 'tab' => $tab]);
     }
 
 
     //ATAQUE
-    public function createAtaque($id)
+    public function createAtaque($id, $tab)
     {
-        return view('ataque.create', compact('id'));
+        return view('ataque.create', compact('id', 'tab'));
     }
 
-    public function storeAtaque(AtaqueRequest $request, $id)
+    public function storeAtaque(AtaqueRequest $request, $id, $tab)
     {
         $personagem = Personagem::findOrFail($id);
         $personagem->ataques()->create($request->validated());
-        return redirect()->route('personagem.show', $id);
+        return redirect()->route('personagem.show', [
+            'id' => $id,
+            'tab' => $tab
+        ]);
     }
 
-    public function editAtaque($id)
+    public function editAtaque($id, $tab)
     {
         $ataque = Ataques::findOrFail($id);
-        return view('ataque.edit', compact('ataque'));
+        return view('ataque.edit', compact('ataque', 'tab'));
     }
 
-    public function updateAtaque(AtaqueRequest $request, $id)
+    public function updateAtaque(AtaqueRequest $request, $id, $tab)
     {
         $item = Ataques::findOrFail($id);
         $personagem_id = $item->personagem_id;
         $item->update($request->validated());
-        return redirect()->route('personagem.show', $personagem_id);
+        return redirect()->route('personagem.show', [
+            'id' => $personagem_id,
+            'tab' => $tab
+        ]);
     }
 
-    public function destroyAtaque($id)
+    public function destroyAtaque($id, $tab)
     {
         $ataque = Ataques::find($id);
         $personagem_id = $ataque->personagem_id;
         $ataque->delete();
-        return redirect()->route('personagem.show', $personagem_id);
+        return redirect()->route('personagem.show', [
+            'id' => $personagem_id,
+            'tab' => $tab
+        ]);
     }
 }

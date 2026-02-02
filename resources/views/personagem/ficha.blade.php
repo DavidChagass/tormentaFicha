@@ -48,6 +48,25 @@
             /* <-- Apparently some margin are still there even though it's hidden */
         }
 
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
         input[type=number] {
             -moz-appearance: textfield;
             /* Firefox */

@@ -59,8 +59,9 @@
         class=" flex flex-col gap-4 bg-[#f4ebd0] flex rounded-lg shadow-2xl w-fit h-fit content-evenly border border-2 p-2 border-transparent">
         <div
             class=" flex flex-col gap-4 bg-[#f4ebd0] flex rounded-lg shadow-2xl w-fit h-fit content-evenly border border-2 p-2 border-red-900">
-            <form action="{{ route('ataque.store', $id) }}" method="POST" class="grid gap-6 p-4">
+            <form action="{{ route('ataque.store',['id' => $id, 'tab' => $tab]) }}" method="POST" class="grid gap-6 p-4">
                 @csrf
+           
                 <div>
                     <label class="text font-bold uppercase text-[12px] block text-red-800">Nome</label>
                     <input type="text" name="nome" placeholder="Nome"

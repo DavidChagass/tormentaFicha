@@ -58,7 +58,7 @@
         class=" flex flex-col gap-4 bg-[#f4ebd0] flex rounded-lg shadow-2xl w-fit h-fit content-evenly border border-2 p-2 border-transparent">
         <div
             class=" flex flex-col gap-4 bg-[#f4ebd0] flex rounded-lg shadow-2xl w-fit h-fit content-evenly border border-2 p-2 border-red-900">
-            <form action="{{ route('ataque.update', $ataque->id) }}" method="POST" class="grid gap-6 p-4">
+            <form action="{{ route('ataque.update', ['id' => $ataque->id, 'tab'=> $tab]) }}" method="POST" class="grid gap-6 p-4">
                 @csrf
                 @method('PUT')
                 <div>
@@ -81,7 +81,7 @@
 
         </form>
         <form class="content-center justify-items-center justify-self-center w-fit ml-auto mr-auto"
-            action="{{ route('ataque.delete', $ataque->id) }}" method="POST">
+            action="{{ route('ataque.delete', ['id' => $ataque->id, 'tab'=> $tab]) }}" method="POST">
             @csrf
             @method('DELETE')
             <button class=" bg-red-900 text-white px-3 py-1 rounded font-bold hover:bg-red-800 transition"

@@ -1,6 +1,6 @@
 <div>
     <div class="max-w-5xl mx-auto p-4 bg-[#f4ebd0] text-gray-900 border-2 border-red-900 shadow-2xl"
-        wire:poll.50s="salvar" x-data="{ tab: 'pericias' }">{{-- WIRE:POLL DEIXAR EM 60, DEPENDENDO EU REDUZO PRA 20, OU 15 --}}
+        wire:poll.50s="salvar" x-data="{ tab: @entangle('abaAtiva') }">{{-- WIRE:POLL DEIXAR EM 60, DEPENDENDO EU REDUZO PRA 20, OU 15 --}}
 
         <!-- CABEÇALHO -->
         <div class="flex justify-between items-center mb-6 bg-[#f4ebd0] p-4 border-b-4 border-red-900 sticky top-0 z-50">
@@ -146,7 +146,7 @@
 
                     <!-- ATAQUES -->
                     <div x-show="tab === 'ataques'" class="space-y-2">
-                        <a href="{{ route('ataque.create', $personagemId) }}"
+                        <a href="{{ route('ataque.create', ['id' => $personagemId, 'tab' => 'ataques']) }}"
                             class="inline-block bg-red-800 text-white px-3 py-1 rounded text-xs font-bold mb-4">Adicionar
                             Ataque/Habilidade</a>
                         @foreach ($ataques as $att)
@@ -156,7 +156,7 @@
                                     {{ $att['nome'] }}
                                 </summary>
                                 <textarea class="resize-none bg-white/50 w-full h-fit text-gray-900 text-base" rows="5" disabled>{{ $att['descricao'] }}</textarea>
-                                <a href="{{ route('ataque.edit', $att['id']) }}"
+                                <a href="{{ route('ataque.edit', ['id' => $att['id'], 'tab' => 'ataques']) }}"
                                     class="ml-2 h-fit bg-yellow-700 text-white px-1 py-1 rounded font-bold hover:bg-yellow-600 transition mb-8">edit</a>
                             </details>
                         @endforeach
@@ -173,7 +173,7 @@
                             {{ number_format($cargaAtual, 1, ',', '.') }} / {{ $limite }} <span
                                 class="text-sm">
                                 (Limite de Carga = 10 + 2*FOR)</span></p>
-                        <a href="{{ route('item.create', $personagemId) }}"
+                        <a href="{{ route('item.create', ['id' => $personagemId, 'tab' => 'itens']) }}"
                             class="inline-block bg-red-800 text-white px-3 py-1 rounded text-xs font-bold mb-4">Adicionar
                             Item</a>
                         @foreach ($itens as $item)
@@ -186,7 +186,7 @@
 
                                 <textarea class="resize-none bg-white/50 w-full h-fit text-base text-gray-900" rows="5" disabled>{{ $item['descricao'] }}</textarea>
 
-                                <a href="{{ route('item.edit', $item['id']) }}"
+                                <a href="{{ route('item.edit', ['id' => $item['id'], 'tab' => 'itens']) }}"
                                     class="ml-2 h-fit bg-yellow-700 text-white px-1 py-1 rounded font-bold hover:bg-yellow-600 transition mb-8">edit</a>
                             </details>
                         @endforeach
@@ -200,7 +200,7 @@
                             {{ 10 + floor($dados['nivel'] / 2) }} + mod
                             atributo-chave <span class="text-xs">
                                 (10+1/2nivel + mod atributo-chave)</span></p>
-                        <a href="{{ route('magia.create', $personagemId) }}"
+                        <a href="{{ route('magia.create', ['id' => $personagemId, 'tab' => 'magias']) }}"
                             class="inline-block bg-red-800 text-white px-3 py-1 rounded text-xs font-bold mb-4">Adicionar
                             Magia</a>
                         @foreach ($magias as $magia)
@@ -217,7 +217,7 @@
                                         {{ $magia['resistencia'] }}</p>
                                     <textarea class="resize-none w-full h-fit" rows="10" disabled>{{ $magia['descricao'] }}</textarea>
                                 </div>
-                                <a href="{{ route('magia.edit', $magia['id']) }}"
+                                <a href="{{ route('magia.edit', ['id' => $magia['id'], 'tab'=> 'magias']) }}"
                                     class="ml-2 bg-yellow-700 text-white px-1 py-1 rounded font-bold hover:bg-yellow-600 transition mb-8">edit</a>
                             </details>
                         @endforeach
@@ -225,8 +225,9 @@
 
                     <!-- DESCRIÇÃO -->
                     <div x-show="tab === 'desc'">
-                        <textarea wire:model.blur="dados.descricao" rows="10"
-                            class="w-full text-base text-gray-900 p-2 bg-transparent border-2 border-dashed border-red-900/30 rounded focus:outline-none"></textarea>
+                        <textarea wire:model.blur="dados.descricao" rows="16"
+                            style="overflow-wrap: break-word; hyphens: auto; resize: none"
+                            class="w-full resize-none h-full text-base text-gray-900 p-2 bg-transparent border-2 border-dashed border-red-900/30 rounded focus:outline-none"></textarea>
                     </div>
 
                 </div>

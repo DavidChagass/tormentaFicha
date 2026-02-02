@@ -18,22 +18,23 @@
     <div class=" ">
 
     </div>
-    <ul>
+    <ul class="ml-4 mt-8">
         @foreach ($personagens as $p)
-            <li class="ml-4 my-8 p-4 w-40 bg-red-800">
-                <a class="    rounded text-white" href="{{ route('personagem.show', $p->id) }}">
-                    {{ $p->nome }} - nivel {{ $p->nivel }} - {{ $p->classe }}
+            <div class="border-red-800 border border-2 w-fit h-fit p-4 rounded">
+                <a href="{{ route('personagem.show', $p->id) }}">
+                    <li class="rounded text-white my-2 p-4 w-80 bg-red-800 rounded">
+                        {{ $p->nome }} - nivel {{ $p->nivel }} - {{ $p->classe }}
+                    </li>
                 </a>
-
-            </li>
-
-            <form class="my-16" action="{{ route('delete.personagem', $p->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit">deletar o personagem: {{ $p->nome }}</button>
-            </form>
-            <hr class="border border-2 border-gray-900 my-2 w-60 ">
+                <form action="{{ route('delete.personagem', $p->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button class="mt-16 bg-blue-200 w-fit p-4 rounded" type="submit">deletar:
+                        {{ $p->nome }}</button>
+                </form>
+            </div>
         @endforeach
+        <hr class="border  border-gray-700 my-2 w-96">
     </ul>
 </body>
 

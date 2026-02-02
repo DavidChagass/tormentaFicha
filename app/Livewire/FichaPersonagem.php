@@ -15,6 +15,8 @@ class FichaPersonagem extends Component
     public array $magias = [];
     public array $ataques = [];
 
+    public $abaAtiva = 'pericias';
+
     protected $rules = [
         'dados.nome' => 'nullable|string',
         'dados.nivel' => 'nullable|integer',
@@ -37,6 +39,7 @@ class FichaPersonagem extends Component
         'pericias.*.outros_bonus' => 'nullable|integer',
     ];
 
+
     public function mount($id)
     {
         $this->personagemId = $id;
@@ -47,6 +50,7 @@ class FichaPersonagem extends Component
             $p->refresh();
         }
 
+        $this->abaAtiva = request()->query('tab', 'pericias');
         $arrayCompleto = $p->toArray();
         $this->pericias = $arrayCompleto['pericias'] ?? [];
         $this->itens = $arrayCompleto['itens'] ?? [];
