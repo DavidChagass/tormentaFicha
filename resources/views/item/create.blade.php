@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="{{ asset('IconTormenta20.ico') }}">
     <script src="https://cdn.tailwindcss.com"></script>
-
     <title>Criar Item</title>
     <style>
         input {
@@ -59,7 +59,7 @@
         class=" flex flex-col gap-4 bg-[#f4ebd0] flex rounded-lg shadow-2xl w-fit h-fit content-evenly border border-2 p-2 border-transparent">
         <div
             class=" flex flex-col gap-4 bg-[#f4ebd0] flex rounded-lg shadow-2xl w-fit h-fit content-evenly border border-2 p-2 border-red-900">
-            <form action="{{ route('item.store',['id' =>  $id, 'tab'=> $tab]) }}" method="POST" class="grid gap-6 p-4">
+            <form action="{{ route('item.store', ['id' => $id, 'tab' => $tab]) }}" method="POST" class="grid gap-6 p-4">
                 @csrf
                 <div>
                     <label class="text font-bold uppercase text-[12px] block text-red-800">Nome</label>

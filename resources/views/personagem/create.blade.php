@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="{{ asset('IconTormenta20.ico') }}">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Document</title>
+    <title>Criar Personagem</title>
 </head>
 
 <body>
@@ -27,7 +28,7 @@
                     class="w-60 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-transparent bg-gray-500 placeholder:text-gray-300 text-white"
                     type="text" name="raca" placeholder="raca" required>
             </div>
-                <div>
+            <div>
                 <input
                     class="w-60 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-transparent bg-gray-500 placeholder:text-gray-300 text-white"
                     type="text" name="classe" placeholder="classe" required>
@@ -37,12 +38,13 @@
                     class="w-60 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-transparent bg-gray-500 placeholder:text-gray-300 text-white"
                     type="text" name="divindade" placeholder="divindade (opcional)">
             </div>
-                <div>
+            <div>
                 <input
                     class="w-60 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-transparent bg-gray-500 placeholder:text-gray-300 text-white"
                     type="text" name="nivel" placeholder="nivel" required>
             </div>
-                <h3 class="text-white text-sm p-2">Os atributos, itens, magias e status(vida/mana/estresse) serão adicionados após a criação inicial</h3>
+            <h3 class="text-white text-sm p-2">Os atributos, itens, magias e status(vida/mana/estresse) serão
+                adicionados após a criação inicial</h3>
             <button class=" rounded-md bg-gray-800 w-60 py-2 text-sm font-medium text-white text-center"
                 type="submit">criar personagem</button>
         </form>

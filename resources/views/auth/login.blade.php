@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <script src="https://cdn.tailwindcss.com"></script>
-
+    <link rel="icon" href="{{ asset('IconTormenta20.ico') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Login</title>
 </head>
 
@@ -14,10 +14,10 @@
     <div class="bg-gray-500 grid h-screen content-center place-items-center">
 
         <form
-        class="flex flex-col gap-4 bg-gray-700 grid content-center place-items-center rounded-lg shadow-2xl w-96 h-60 content-evenly "
-        action="{{ route('login') }}" method="POST">
-        <h2 class="text-2xl font-bold text-center text-gray-300">Login</h2>
-        @csrf
+            class="flex flex-col gap-4 bg-gray-700 grid content-center place-items-center rounded-lg shadow-2xl w-96 h-60 content-evenly "
+            action="{{ route('login') }}" method="POST">
+            <h2 class="text-2xl font-bold text-center text-gray-300">Login</h2>
+            @csrf
             <div>
 
                 <input

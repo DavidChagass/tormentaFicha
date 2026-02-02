@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ficha Tormenta 20</title>
+    <link rel="icon" href="{{ asset('IconTormenta20.ico') }}">
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
