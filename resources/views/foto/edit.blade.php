@@ -23,7 +23,7 @@
                 <label class="block font-bold text-red-900 mb-2">Link da Imagem (URL)</label>
                 <input type="text" name="foto" value="{{ $personagem->foto }}"
                     class="w-full p-2 border-2 border-red-900/30 bg-white focus:outline-none focus:border-red-900"
-                    placeholder="https://i.imgur.com/link-da-foto.png" required>
+                    placeholder="link da foto.png" required>
                 <p class="text-base text-gray-600 mt-2 italic">* RECOMENDO USAR O Postimages.org</p> 
             </div>
 
