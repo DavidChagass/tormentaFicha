@@ -4,15 +4,20 @@
 
         <!-- CABEÇALHO -->
         <div class="flex justify-between items-center mb-6 bg-[#f4ebd0] p-4 border-b-4 border-red-900 sticky top-0 z-50">
+            <!-- IMAGEM -->
+            <div>
+                
+            </div>
+            <!-- NOME -->
             <div class="bg-[#f4ebd0]">
                 <input type="text" wire:model.blur="dados.nome"
-                    class="text-xl font-bold bg-transparent border-none p-0 focus:ring-0 w-full">
+                    class="text-xl font-bold bg-transparent border-none p-0 focus:ring-0 w-fit">
             </div>
             <!-- NIVEL, RACA, CLASSE, DIVINDADE -->
             <div class="flex gap-4">
                 <div class="border-l-2 pl-2 border-red-900">
                     <label class="text font-bold uppercase text-[12px] block text-red-800">Nível</label>
-                    <input type="number" wire:model.blur="dados.nivel" class="w-24 bg-transparent font-bold">
+                    <input type="number" wire:model.blur="dados.nivel" class="w-8 bg-transparent font-bold">
                 </div>
                 <div class="border-l-2 pl-2 border-red-900">
                     <label class="text font-bold uppercase text-[12px] block text-red-800">Raça</label>
@@ -20,7 +25,7 @@
                 </div>
                 <div class="border-l-2 pl-2 border-red-900">
                     <label class="text font-bold uppercase text-[12px] block text-red-800">Classe</label>
-                    <input type="text" wire:model.blur="dados.classe" class="w-32 bg-transparent font-bold">
+                    <input type="text" wire:model.blur="dados.classe" class="w-48 bg-transparent font-bold">
                 </div>
                 <div class="border-l-2 pl-2 border-red-900">
                     <label class="text font-bold uppercase text-[12px] block text-red-800">Divindade</label>
