@@ -79,7 +79,7 @@ class PersonagemController extends Controller
         $magia = PersonagemMagia::findOrFail($id);
         $personagem_id = $magia->personagem_id;
         $magia->update($request->validated());
-        return redirect()->route('personagem.show', ['id' => $personagem_id, 'tab' =>$tab]);
+        return redirect()->route('personagem.show', ['id' => $personagem_id, 'tab' => $tab]);
     }
 
     public function destroyMagia($id, $tab)
@@ -87,7 +87,7 @@ class PersonagemController extends Controller
         $magia = PersonagemMagia::find($id);
         $id =  $magia->personagem_id;
         $magia->delete();
-        return redirect()->route('personagem.show', ['id' => $id, 'tab' =>$tab]);
+        return redirect()->route('personagem.show', ['id' => $id, 'tab' => $tab]);
     }
 
 
@@ -170,5 +170,23 @@ class PersonagemController extends Controller
             'id' => $personagem_id,
             'tab' => $tab
         ]);
+    }
+
+    //FOTO
+    public function editFoto($id)
+    {
+        $personagem = Personagem::findOrFail($id);
+        return view('foto.edit', compact('personagem'));
+    }
+    public function updateFoto(Request $request, $id)
+    {
+        $request->validate(['foto' => 'required|url']);
+
+
+        $personagem = Personagem::findOrFail($id);
+        $personagem->update(
+            ['foto' => $request->foto]
+        );
+        return redirect()->route('personagem.show', ['id' => $id]);
     }
 }

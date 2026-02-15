@@ -43,4 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/personagem/{id}/{tab}/ataque/edit', [PersonagemController::class, 'editAtaque'])->name('ataque.edit');
     Route::put('/personagem/{id}/{tab}/ataque/update', [PersonagemController::class, 'updateAtaque'])->name('ataque.update');
     Route::delete('/personagem/{id}/{tab}/ataque/delete', [PersonagemController::class, 'destroyAtaque'])->name('ataque.delete');
-});
+
+    //FOTO
+    Route::get('/personagem/{id}/foto/edit', [PersonagemController::class,'editFoto'])->name('foto.edit');
+    Route::put('/personagem/{id}/foto/update',[PersonagemController::class,'updateFoto'])->name('foto.update');
+    });

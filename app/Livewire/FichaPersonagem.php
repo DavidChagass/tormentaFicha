@@ -37,6 +37,7 @@ class FichaPersonagem extends Component
         'dados.defesa' => 'nullable|integer',
         'pericias.*.treinado' => 'boolean',
         'pericias.*.outros_bonus' => 'nullable|integer',
+        'dados.foto' => 'nullable|string',
     ];
 
 

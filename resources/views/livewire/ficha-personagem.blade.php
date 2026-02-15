@@ -3,11 +3,21 @@
         wire:poll.50s="salvar" x-data="{ tab: @entangle('abaAtiva') }">{{-- WIRE:POLL DEIXAR EM 60, DEPENDENDO EU REDUZO PRA 20, OU 15 --}}
 
         <!-- CABEÇALHO -->
-        <div class="flex justify-between items-center mb-6 bg-[#f4ebd0] p-4 border-b-4 border-red-900 sticky top-0 z-50">
+        <div class="h-fit flex justify-between items-center mb-4 bg-[#f4ebd0] p-1 border-b-4 border-red-900 ">
             <!-- IMAGEM -->
-            <div>
-                
-            </div>
+
+            <a href="{{ route('foto.edit', $personagemId) }}"
+                class="w-20 mb-2 h-20 border border-red-900 bg-white overflow-hidden rounded flex items-center justify-center bg-gray-100"
+                title="Clique para mudar a fotinha">
+
+                @if (!empty($dados['foto']))
+                    <img src="{{ $dados['foto'] }}" referrerpolicy="no-referrer" class="w-full h-full object-cover">
+                @else
+                    <span class="text-[10px] font-bold text-red-900 uppercase text-center p-1">adicionar <br>
+                        foto</span>
+                @endif
+            </a>
+
             <!-- NOME -->
             <div class="bg-[#f4ebd0]">
                 <input type="text" wire:model.blur="dados.nome"
@@ -222,7 +232,7 @@
                                         {{ $magia['resistencia'] }}</p>
                                     <textarea class="resize-none w-full h-fit" rows="10" disabled>{{ $magia['descricao'] }}</textarea>
                                 </div>
-                                <a href="{{ route('magia.edit', ['id' => $magia['id'], 'tab'=> 'magias']) }}"
+                                <a href="{{ route('magia.edit', ['id' => $magia['id'], 'tab' => 'magias']) }}"
                                     class="ml-2 bg-yellow-700 text-white px-1 py-1 rounded font-bold hover:bg-yellow-600 transition mb-8">edit</a>
                             </details>
                         @endforeach
