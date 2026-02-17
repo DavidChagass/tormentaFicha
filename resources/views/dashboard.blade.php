@@ -13,6 +13,7 @@
 
 <!-- ADICIONADO O X-DATA ABAIXO PARA O ALPINE FUNCIONAR -->
 <body class="bg-[#fdf6e3]" x-data="{ showModal: false, charName: '', formId: '' }">
+
     <div class="mt-12"></div>
     <a class="bg-red-800 text-white p-2 rounded m-4 " href="{{ route('personagem.create') }}">
         Criar personagem
@@ -40,30 +41,33 @@
         @endforeach
         <hr class="border border-gray-700 my-2 w-96">
     </ul>
-
     <!-- MODAL -->
     <div x-show="showModal"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-        style="display: none;"> <!-- O Alpine remove esse display:none automaticamente -->
-
-        <div class="bg-[#fdf6e3] border-4 border-red-800 p-8 rounded shadow-2xl max-w-sm w-full text-center">
-            <h2 class="text-xl font-black text-red-800 uppercase mb-4">Confirmar Exclusão</h2>
-
-            <p class="text-gray-800 mb-6">
-                Você tem certeza que deseja apagar o personagem <br>
-                <span class="font-bold text-lg"><span x-text="charName"></span>?
-            </p>
-
-            <div class="flex gap-4">
-                <button @click="showModal = false" class="flex-1 px-4 py-2 border border-gray-400 rounded hover:bg-gray-100 transition">
-                    SIM
-                </button>
-
-                <button @click="document.getElementById(formId).submit()" class="flex-1 px-4 py-2 bg-red-800 text-white font-bold rounded hover:bg-red-900 transition"> 
-                    SIM
-                </button>
-            </div>
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+    style="display: none;"> <!-- O Alpine remove esse display:none automaticamente -->
+    
+    <div class="bg-[#fdf6e3] border-4 border-red-800 p-8 rounded shadow-2xl max-w-sm w-full text-center">
+        <h2 class="text-xl font-black text-red-800 uppercase mb-4">Confirmar Exclusão</h2>
+        
+        <p class="text-gray-800 mb-6">
+            Você tem certeza que deseja apagar o personagem <br>
+            <span class="font-bold text-lg"><span x-text="charName"></span>?
+        </p>
+        
+        <div class="flex gap-4">
+            <button @click="showModal = false" class="flex-1 px-4 py-2 border border-gray-400 rounded hover:bg-gray-100 transition">
+                SIM
+            </button>
+            
+            <button @click="document.getElementById(formId).submit()" class="flex-1 px-4 py-2 bg-red-800 text-white font-bold rounded hover:bg-red-900 transition"> 
+                SIM
+            </button>
         </div>
+    </div>
+</div>
+
+    <div class="absolute bottom-10 left-2/3">
+        <a href="https://youtu.be/dQw4w9WgXcQ?si=1AulrKrMkCR8BszW" class="text-xs p-2 bg-blue-100 rounded">futuros updates</a>
     </div>
 </body>
 </html>
