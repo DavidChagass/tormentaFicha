@@ -195,7 +195,7 @@
                             <details wire:key="item-{{ $item['id'] }}"
                                 class="bg-white/50 border border-red-900/20 rounded">
                                 <summary class=" uppercase p-2 font-bold cursor-pointer text-sm">{{ $item['nome'] }}
-                                    ({{ $item['quantidade'] }}x)
+                                    ({{ number_format($item['quantidade'], 1, ',', '.') }}x)
                                     - Peso: {{ number_format($item['peso'] * $item['quantidade'], 1, ',', '.') }}
                                 </summary>
 

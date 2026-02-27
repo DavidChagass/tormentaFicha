@@ -69,7 +69,7 @@
                 <div>
                     <label class="text font-bold uppercase text-[12px] block text-red-800"
                         for="quantidade">Quantidade</label>
-                    <input type="number" name="quantidade" placeholder="quantidade" required
+                    <input type="number" step="0.1" name="quantidade" placeholder="quantidade" required
                         class="w-fit bg-transparent border border-2 border-red-800 rounded font-bold w-fit">
                 </div>
 

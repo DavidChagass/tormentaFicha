@@ -24,7 +24,7 @@ class ItemRequest extends FormRequest
     {
         return [
             'nome' => 'required|string|max:255',
-            'quantidade' => 'nullable|integer',
+            'quantidade' => 'nullable|numeric',
             'peso' => 'nullable|numeric',
             'descricao' => 'nullable',
         ];
