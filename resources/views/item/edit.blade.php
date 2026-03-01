@@ -78,7 +78,7 @@
 
                 <div class="w-fit h-fit">
                     <label class="text font-bold uppercase text-[12px] block text-red-800" for="peso">Peso</label>
-                    <input type="number" name="peso" step="0.1" placeholder="peso" required
+                    <input type="number" name="peso" step="0.01" placeholder="peso" required
                         value="{{ $item->peso }}"
                         class="w-fit bg-transparent border border-2 border-red-800 rounded font-bold">
                 </div>
