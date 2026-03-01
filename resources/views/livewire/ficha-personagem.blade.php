@@ -184,7 +184,7 @@
                             $limite = 10 + $dados['forca'] * 2;
                         @endphp
 
-                        <p class="ml-2 text-gray-900 text-base">Carga: Carga:
+                        <p class="ml-2 text-gray-900 text-base">Carga:
                             {{ number_format($cargaAtual, 1, ',', '.') }} / {{ $limite }} <span
                                 class="text-sm">
                                 (Limite de Carga = 10 + 2*FOR)</span></p>
