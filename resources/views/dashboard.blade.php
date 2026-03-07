@@ -56,7 +56,7 @@
         
         <div class="flex gap-4">
             <button @click="showModal = false" class="flex-1 px-4 py-2 border border-gray-400 rounded hover:bg-gray-100 transition">
-                SIM
+                NÃO
             </button>
             
             <button @click="document.getElementById(formId).submit()" class="flex-1 px-4 py-2 bg-red-800 text-white font-bold rounded hover:bg-red-900 transition"> 

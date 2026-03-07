@@ -1,11 +1,14 @@
 <div>
     <div class="max-w-5xl mx-auto p-4 bg-[#f4ebd0] text-gray-900 border-2 border-red-900 shadow-2xl"
         wire:poll.50s="salvar" x-data="{ tab: @entangle('abaAtiva') }">{{-- WIRE:POLL DEIXAR EM 60, DEPENDENDO EU REDUZO PRA 20, OU 15 --}}
-
+            <!-- BOTÃO DE VOLTAR -->
+            <a class="ml-[4px] flex-1 px-5 w-20 h-fit py-1 border border-red-800 rounded hover:bg-red-100 transition text-base" href="{{route('dashboard')}}">
+                Voltar
+            </a>
         <!-- CABEÇALHO -->
         <div class="h-fit flex justify-between items-center mb-4 bg-[#f4ebd0] p-1 border-b-4 border-red-900 ">
-            <!-- IMAGEM -->
 
+            <!-- IMAGEM -->
             <a href="{{ route('foto.edit', $personagemId) }}"
                 class="w-20 mb-2 h-20 border border-red-900 bg-white overflow-hidden rounded flex items-center justify-center bg-gray-100"
                 title="Clique para mudar a fotinha">

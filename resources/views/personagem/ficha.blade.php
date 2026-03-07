@@ -81,7 +81,7 @@
 
     <div @yield('content')
         class="max-w-6xl mx-auto bg-[#fdf6e3] text-gray-800 p-4 shadow-2xl rounded-sm border-2 border-[#d1c4ae] relative">
-
+       
         @livewire('ficha-personagem', ['id' => $personagem->id])
     </div>
 
