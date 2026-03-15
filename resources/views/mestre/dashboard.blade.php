@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="{{ asset('IconTormenta20.ico') }}">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <meta http-equiv="refresh" content="10">
+    <meta http-equiv="refresh" content="5">
     <title>Dashboard</title>
 </head>
 
@@ -15,8 +14,8 @@
     @if ($personagem)
         @foreach ($personagem as $p)
             <ul>
-                <ol> <strong>{{ $p->nome }}</strong> - <i>hp atual: </i>{{ $p->hp_atual }} / <i>hp maximo: </i>
-                    {{ $p->hp_maximo }}</ol>
+                <ol>{{ $p->hp_atual }} / {{ $p->hp_maximo }} - <strong>{{ $p->nome }}</strong> 
+                    </ol>
             </ul>
         @endforeach
     @else
