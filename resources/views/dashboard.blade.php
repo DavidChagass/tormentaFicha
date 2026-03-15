@@ -11,7 +11,6 @@
     <title>Dashboard</title>
 </head>
 
-<!-- ADICIONADO O X-DATA ABAIXO PARA O ALPINE FUNCIONAR -->
 <body class="bg-[#fdf6e3]" x-data="{ showModal: false, charName: '', formId: '' }">
 
     <div class="mt-12"></div>

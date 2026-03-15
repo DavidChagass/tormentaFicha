@@ -26,7 +26,10 @@ class AuthController extends Controller
         }
 
         Auth::login($user);
-
+        if($user->name == 'mestre')
+            {
+                return redirect()->route('mestre.dashboard');
+            }
         return redirect()->route('dashboard');
     }
 

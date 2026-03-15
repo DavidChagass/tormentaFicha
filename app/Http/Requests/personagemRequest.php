@@ -23,10 +23,10 @@ class personagemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' =>'required|string|max:255',
-            'raca' =>'required|string',
-            'classe' =>'required|string',
-            'divindade' =>'nullable|string',
+            'nome' => 'required|string|max:255',
+            'raca' => 'required|string',
+            'classe' => 'required|string',
+            'divindade' => 'nullable|string',
             'nivel' => 'nullable|integer'
         ];
     }
@@ -37,4 +37,6 @@ class personagemRequest extends FormRequest
             'classe.required' => 'voce deve ter uma classe',
         ];
     }
+
+
 }

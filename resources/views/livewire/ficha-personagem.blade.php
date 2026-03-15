@@ -1,10 +1,15 @@
 <div>
     <div class="max-w-5xl mx-auto p-4 bg-[#f4ebd0] text-gray-900 border-2 border-red-900 shadow-2xl"
-        wire:poll.50s="salvar" x-data="{ tab: @entangle('abaAtiva') }">{{-- WIRE:POLL DEIXAR EM 60, DEPENDENDO EU REDUZO PRA 20, OU 15 --}}
-            <!-- BOTÃO DE VOLTAR -->
-            <a class="ml-[4px] flex-1 px-5 w-20 h-fit py-1 border border-red-800 rounded hover:bg-red-100 transition text-base" href="{{route('dashboard')}}">
-                Voltar
-            </a>
+        style="
+        background-image: url('{{ asset('fundoficha.png') }}');
+        background-size: repeat;
+        background-position: center;"
+        wire:poll.15s="salvar" x-data="{ tab: @entangle('abaAtiva') }">{{-- WIRE:POLL DEIXAR EM 60, DEPENDENDO EU REDUZO PRA 20, OU 15 --}}
+        <!-- BOTÃO DE VOLTAR -->
+        <a class="ml-[4px] flex-1 px-5 w-20 h-fit py-1 border border-red-800 rounded hover:bg-red-100 transition text-base"
+            href="{{ route('dashboard') }}">
+            Voltar
+        </a>
         <!-- CABEÇALHO -->
         <div class="h-fit flex justify-between items-center mb-4 bg-[#f4ebd0] p-1 border-b-4 border-red-900 ">
 
@@ -30,7 +35,8 @@
             <div class="flex gap-4">
                 <div class="border-l-2 pl-2 border-red-900">
                     <label class="text font-bold uppercase text-[12px] block text-red-800">Nível</label>
-                    <input type="number" wire:model.blur="dados.nivel" class="w-8 bg-transparent font-bold">
+                    <input type="number" wire:model.blur="dados.nivel" class="w-8 bg-transparent font-bold"
+                        x-on:input="$event.target.value = $event.target.value.replace(/\D/g,'').slice(0,2)">
                 </div>
                 <div class="border-l-2 pl-2 border-red-900">
                     <label class="text font-bold uppercase text-[12px] block text-red-800">Raça</label>
@@ -60,6 +66,7 @@
                     <div class="border-2 border-red-900 bg-[#f4ebd0] p-2 rounded text-center">
                         <label class="text-xl font-bold uppercase text-red-800">{{ substr($attr, 0, 3) }}</label>
                         <input type="number" wire:model.blur="dados.{{ $attr }}"
+                            x-on:input="$event.target.value = $event.target.value.replace(/[^0-9+-]/g,'')"
                             class="w-full text-center text-xl font-black border-none bg-[#f4ebd0] focus:ring-0 p-0">
                     </div>
                 @endforeach
@@ -148,7 +155,8 @@
                                     </div>
                                     <label
                                         class="text-sm font-bold uppercase text-gray-900">{{ substr($pericia['atributo_base'], 0, 3) }}</label>
-                                    <input type="number" wire:model.blur="pericias.{{ $idx }}.outros_bonus"
+                                    <input type="text" wire:model.blur="pericias.{{ $idx }}.outros_bonus"
+                                        x-on:input="$event.target.value = $event.target.value.replace(/[^0-9+-]/g,'')"
                                         class="w-8 bg-transparent text-center border-b border-gray-400">
                                     <div class="w-8 text-center bg-red-900 text-white font-bold rounded text-base">
                                         {{ floor($dados['nivel'] / 2) + ($dados[$pericia['atributo_base']] ?? 0) + ($pericia['treinado'] ? 2 : 0) + ($pericia['outros_bonus'] ?? 0) }}
@@ -168,7 +176,7 @@
                             class="inline-block bg-red-800 text-white px-3 py-1 rounded text-xs font-bold mb-4">Adicionar
                             Ataque/Habilidade</a>
                         @foreach ($ataques as $att)
-                            <details wire:key="ataque-{{ $att['id'] }}"
+                            <details wire:ignore wire:key="ataque-{{ $att['id'] }}"
                                 class="bg-white/50 border border-red-900/20 rounded">
                                 <summary class="uppercase p-2 font-bold cursor-pointer text-sm">
                                     {{ $att['nome'] }}
@@ -195,17 +203,24 @@
                             class="inline-block bg-red-800 text-white px-3 py-1 rounded text-xs font-bold mb-4">Adicionar
                             Item</a>
                         @foreach ($itens as $item)
-                            <details wire:key="item-{{ $item['id'] }}"
-                                class="bg-white/50 border border-red-900/20 rounded">
-                                <summary class=" uppercase p-2 font-bold cursor-pointer text-sm">{{ $item['nome'] }}
+                            <details wire:ignore wire:key="item-{{ $item['id'] }}"
+                                class="bg-[#aa796b] border text-black border-red-900/20 rounded flex-2">
+                                <summary class="flex items-center uppercase p-2 font-bold cursor-pointer text-sm">
+                                    {{ $item['nome'] }}
                                     ({{ number_format($item['quantidade'], 1, ',', '.') }}x)
                                     - Peso: {{ number_format($item['peso'] * $item['quantidade'], 1, ',', '.') }}
+
+                                    <a class="inline-flex items-center justify-center w-[30px] h-[30px] ml-auto"
+                                        href="{{ route('item.edit', ['id' => $item['id'], 'tab' => 'itens']) }}">
+                                        <svg class=" w-fit h-fit" width="30px" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                            <path
+                                                d="M535.6 85.7C513.7 63.8 478.3 63.8 456.4 85.7L432 110.1L529.9 208L554.3 183.6C576.2 161.7 576.2 126.3 554.3 104.4L535.6 85.7zM236.4 305.7C230.3 311.8 225.6 319.3 222.9 327.6L193.3 416.4C190.4 425 192.7 434.5 199.1 441C205.5 447.5 215 449.7 223.7 446.8L312.5 417.2C320.7 414.5 328.2 409.8 334.4 403.7L496 241.9L398.1 144L236.4 305.7zM160 128C107 128 64 171 64 224L64 480C64 533 107 576 160 576L416 576C469 576 512 533 512 480L512 384C512 366.3 497.7 352 480 352C462.3 352 448 366.3 448 384L448 480C448 497.7 433.7 512 416 512L160 512C142.3 512 128 497.7 128 480L128 224C128 206.3 142.3 192 160 192L256 192C273.7 192 288 177.7 288 160C288 142.3 273.7 128 256 128L160 128z" />
+                                        </svg></a>
                                 </summary>
 
-                                <textarea class="resize-none bg-white/50 w-full h-fit text-base text-gray-900" rows="5" disabled>{{ $item['descricao'] }}</textarea>
+                                <textarea class=" px-1 resize-none bg-[#c49f8c] w-full h-fit text-base text-gray-900" rows="5" disabled>{{ $item['descricao'] }}</textarea>
 
-                                <a href="{{ route('item.edit', ['id' => $item['id'], 'tab' => 'itens']) }}"
-                                    class="ml-2 h-fit bg-yellow-700 text-white px-1 py-1 rounded font-bold hover:bg-yellow-600 transition mb-8">edit</a>
                             </details>
                         @endforeach
 
@@ -222,10 +237,18 @@
                             class="inline-block bg-red-800 text-white px-3 py-1 rounded text-xs font-bold mb-4">Adicionar
                             Magia</a>
                         @foreach ($magias as $magia)
-                            <details class="mb-2 border-l-4 border-blue-800">
+                            <details wire:ignore class="mb-2 border-l-4 border-blue-800">
                                 <summary class="uppercase p-2 font-bold cursor-pointer bg-blue-50">
                                     {{ $magia['nome'] }} - <span class="text-xs">{{ $magia['circulo'] }}º
                                         Círculo</span>
+
+                                    <a href="{{ route('magia.edit', ['id' => $magia['id'], 'tab' => 'magias']) }}"
+                                        <svg class=" w-fit h-fit" width="30px" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 640 640"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                                        <path
+                                            d="M535.6 85.7C513.7 63.8 478.3 63.8 456.4 85.7L432 110.1L529.9 208L554.3 183.6C576.2 161.7 576.2 126.3 554.3 104.4L535.6 85.7zM236.4 305.7C230.3 311.8 225.6 319.3 222.9 327.6L193.3 416.4C190.4 425 192.7 434.5 199.1 441C205.5 447.5 215 449.7 223.7 446.8L312.5 417.2C320.7 414.5 328.2 409.8 334.4 403.7L496 241.9L398.1 144L236.4 305.7zM160 128C107 128 64 171 64 224L64 480C64 533 107 576 160 576L416 576C469 576 512 533 512 480L512 384C512 366.3 497.7 352 480 352C462.3 352 448 366.3 448 384L448 480C448 497.7 433.7 512 416 512L160 512C142.3 512 128 497.7 128 480L128 224C128 206.3 142.3 192 160 192L256 192C273.7 192 288 177.7 288 160C288 142.3 273.7 128 256 128L160 128z" />
+                                        </svg>
+                                    </a>
                                 </summary>
                                 <div class="p-2 text-base text-gray-900 bg-blue-50">
                                     <p class="italic mb-2 text-indigo-800">Escola: {{ $magia['escola'] }} |
@@ -235,8 +258,7 @@
                                         {{ $magia['resistencia'] }}</p>
                                     <textarea class="resize-none w-full h-fit" rows="10" disabled>{{ $magia['descricao'] }}</textarea>
                                 </div>
-                                <a href="{{ route('magia.edit', ['id' => $magia['id'], 'tab' => 'magias']) }}"
-                                    class="ml-2 bg-yellow-700 text-white px-1 py-1 rounded font-bold hover:bg-yellow-600 transition mb-8">edit</a>
+
                             </details>
                         @endforeach
                     </div>

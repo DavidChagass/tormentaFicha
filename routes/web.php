@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MestreController;
 use App\Http\Controllers\PersonagemController;
 use Illuminate\Support\Facades\Route;
 
@@ -47,4 +48,10 @@ Route::middleware('auth')->group(function () {
     //FOTO
     Route::get('/personagem/{id}/foto/edit', [PersonagemController::class,'editFoto'])->name('foto.edit');
     Route::put('/personagem/{id}/foto/update',[PersonagemController::class,'updateFoto'])->name('foto.update');
+
+
+
+    //AREA DO MESTRE :3 
+    Route::get('/mestre/dashboard',[MestreController::class, 'index'])->name('mestre.dashboard');
+
     });

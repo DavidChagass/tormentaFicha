@@ -110,28 +110,72 @@ class FichaPersonagem extends Component
     public function updated($propertyName, $value)
     {
         if (str_starts_with($propertyName, 'dados.')) {
+
             $campo = str_replace('dados.', '', $propertyName);
-            DB::table('personagens')->where('id', $this->personagemId)->update([$campo => $value]);
-        }
+            $numericos = [
+                'nivel',
+                'forca',
+                'destreza',
+                'constituicao',
+                'inteligencia',
+                'sabedoria',
+                'carisma',
+                'hp_atual',
+                'hp_maximo',
+                'mp_atual',
+                'mp_maximo',
+                'estresse_atual',
+                'estresse_maximo',
+                'defesa'
+            ];
 
-        if (str_starts_with($propertyName, 'pericias.')) {
-            $parts = explode('.', $propertyName);
-            $index = $parts[1];
-            $campo = $parts[2];
-            $id = $this->pericias[$index]['id'];
+            if (in_array($campo, $numericos)) {
 
-            DB::table('pericias')->where('id', $id)->update([
-                $campo => ($campo === 'treinado') ? ($value ? 1 : 0) : ($value ?? 0)
-            ]);
-        }
+                $value = trim((string) $value);
+                if ($value === '') {
+                    $value = 0;
+                }
+                $value = (int) filter_var($value, FILTER_SANITIZE_NUMBER_INT);
+                $this->dados[$campo] = $value;
+            }
 
-        if (str_starts_with($propertyName, 'ataques.')) {
-            $parts = explode('.', $propertyName);
-            $index = $parts[1];
-            $campo = $parts[2];
-            $id = $this->ataques[$index]['id'];
+            DB::table('personagens')
+                ->where('id', $this->personagemId)
+                ->update([$campo => $value]);
 
-            DB::table('ataques')->where('id', $id)->update([$campo => $value]);
+            //os trem de pericia
+            if (str_starts_with($propertyName, 'pericias.')) {
+                $parts = explode('.', $propertyName);
+                $index = $parts[1];
+                $campo = $parts[2];
+                $id = $this->pericias[$index]['id'];
+
+                if ($campo === 'outros_bonus') {
+                    $value = trim((string) $value);
+
+                    if ($value === '') {
+                        $value = 0;
+                    } else {
+                        $value = (int) filter_var($value, FILTER_SANITIZE_NUMBER_INT);
+                    }
+
+                    $this->pericias[$index]['outros_bonus'] = $value;
+                }
+                DB::table('pericias')
+                    ->where('id', $id)
+                    ->update([
+                        $campo => ($campo === 'treinado') ? ($value ? 1 : 0) : $value
+                    ]);
+            }
+
+            if (str_starts_with($propertyName, 'ataques.')) {
+                $parts = explode('.', $propertyName);
+                $index = $parts[1];
+                $campo = $parts[2];
+                $id = $this->ataques[$index]['id'];
+
+                DB::table('ataques')->where('id', $id)->update([$campo => $value]);
+            }
         }
     }
 
