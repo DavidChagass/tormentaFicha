@@ -282,10 +282,10 @@
                             @endforeach
                         </div>
 
-                        <div x-show="tab === 'desc'">
+                        <div wire:ignore x-show="tab === 'desc'">
                             <textarea wire:model.blur="dados.descricao" rows="16"
                                 style="overflow-wrap: break-word; hyphens: auto; resize: none"
-                                class="w-full resize-none h-full text-base text-red-950 p-2 bg-transparent border-none focus:ring-0 font-medium"></textarea>
+                                class="w-full resize-none h-full text-base text-red-950 p-2 bg-transparent border-none focus:ring-0 font-medium focus:outline-none"></textarea>
                         </div>
 
                     </div>
