@@ -65,8 +65,13 @@
     </div>
 </div>
 
-    <div class="absolute bottom-10 left-2/3">
-        <a href="https://youtu.be/dQw4w9WgXcQ?si=1AulrKrMkCR8BszW" class="text-xs p-2 bg-blue-100 rounded">futuros updates</a>
+<div class="absolute bottom-10 left-2/3">
+    <h1><strong>FUTUROS UPDATES!</strong></h1>
+        <ul>
+            <ol> - roteiro de combate</ol>
+                <p>As habilidades, ataques e magias, agora vão ter uma checkbox para voce organizar o que quer fazer</p>
+            <ol> - otimizações da ficha</ol>
+        </ul>
     </div>
 </body>
 </html>
