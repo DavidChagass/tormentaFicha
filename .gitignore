@@ -22,3 +22,6 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+ca.pem
+database/seeders/DatabaseSeeder.php
+database/seeders/SeederSecundario.php
