@@ -35,6 +35,9 @@ class PersonagemController extends Controller
 
         $dados['user_id'] = Auth::id();
         $personagem = Personagem::query()->create($dados);
+        if(!$personagem){
+            abort(400, "n deu pra criar seu personage :(");
+        }
         return redirect()->route('personagem.show', $personagem->id);
     }
 

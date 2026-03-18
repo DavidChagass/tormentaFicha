@@ -71,6 +71,8 @@
             <ol> - roteiro de combate</ol>
                 <p>As habilidades, ataques e magias, agora vão ter uma checkbox para voce organizar o que quer fazer</p>
             <ol> - otimizações da ficha</ol>
+            <ol> - alterar a ordem das magias/ataques/itens</ol>
+            <ol> - mais blocos na aba de descrição</ol>
         </ul>
     </div>
 </body>
