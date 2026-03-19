@@ -156,18 +156,15 @@
                                         <div
                                             class="w-30 text-center bg-red-900 text-white font-bold rounded text-sm mr-4">
                                             <p class="text-sm px-2">1/2 nivel: <span
-                                                    class="pl-[px:4]">{{ floor($dados['nivel'] / 2) +
-                                                        ($dados[$pericia['atributo_base']] ?? 0) +
-                                                        ($pericia['treinado'] ? 2 : 0) +
-                                                        ($pericia['outros_bonus'] ?? 0) }}</span>
+                                                    class="pl-[px:4]">{{ floor($dados['nivel'] / 2) }}</span>
                                             </p>
                                         </div>
                                         <label
                                             class="text-sm font-bold uppercase text-red-900">{{ substr($pericia['atributo_base'], 0, 3) }}</label>
-                                        <input type="text"
+                                        <input type="number"
                                             wire:model.live="pericias.{{ $idx }}.outros_bonus"
                                             x-on:input="
-                                                let val = $event.target.value.replace(/\D/g,'');
+                                                let val = $event.target.value.replace(/[^0-9+-]/g,'');
                                                 $event.target.value = val === '' ? '0' : val;"
                                             class="w-8 bg-transparent text-center border-b border-red-900/40 focus:ring-0 text-red-950">
                                         <div class="w-8 text-center bg-red-900 text-white font-bold rounded text-base">
