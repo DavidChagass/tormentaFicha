@@ -168,7 +168,19 @@
                                                $event.target.value = val;"
                                             class="w-8 bg-transparent text-center border-b border-red-900/40 focus:ring-0 text-red-950">
                                         <div class="w-8 text-center bg-red-900 text-white font-bold rounded text-base">
-                                            {{ floor($dados['nivel'] / 2) + ($dados[$pericia['atributo_base']] ?? 0) + ($pericia['treinado'] ? 2 : 0) + ((int) ($pericia['outros_bonus'] ?? 0)) }}
+                                            @php
+                                                $valTreino = 0;
+                                                if($pericia['treinado']){
+                                                    if ($dados['nivel'] >= 7 and $dados['nivel'] <= 14) {
+                                                        $valTreino = 4;
+                                                    }elseif ($dados['nivel'] >14) {
+                                                        $valTreino = 6;
+                                                    }else {
+                                                        $valTreino=2;
+                                                    }
+                                                }
+                                            @endphp
+                                            {{ floor($dados['nivel'] / 2) + ($dados[$pericia['atributo_base']] ?? 0) + ($valTreino) + ((int) ($pericia['outros_bonus'] ?? 0)) }}
                                         </div>
                                     </div>
                                 </div>
