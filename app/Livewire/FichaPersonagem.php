@@ -14,7 +14,7 @@ class FichaPersonagem extends Component
     public array $itens = [];
     public array $magias = [];
     public array $ataques = [];
-
+    protected $listeners = ['atualizarPericia'];
     public $abaAtiva = 'pericias';
 
     protected $rules = [
@@ -40,7 +40,6 @@ class FichaPersonagem extends Component
         'dados.foto' => 'nullable|string',
     ];
 
-
     public function mount($id)
     {
         $this->personagemId = $id;
@@ -53,6 +52,7 @@ class FichaPersonagem extends Component
 
         $this->abaAtiva = request()->query('tab', 'pericias');
         $arrayCompleto = $p->toArray();
+
         $this->pericias = $arrayCompleto['pericias'] ?? [];
         $this->itens = $arrayCompleto['itens'] ?? [];
         $this->magias = $arrayCompleto['magias'] ?? [];
@@ -107,94 +107,80 @@ class FichaPersonagem extends Component
         DB::table('pericias')->insert($dadosParaInserir);
     }
 
-    public function updated($propertyName, $value)
+    public function updated($property, $value)
     {
-        if (str_starts_with($propertyName, 'dados.')) {
+        if (str_starts_with($property, 'dados.') || str_starts_with($property, 'pericias.')) {
+            $this->dispatch('trigger-save');
+        }
 
-            $campo = str_replace('dados.', '', $propertyName);
-            $numericos = [
-                'nivel',
-                'forca',
-                'destreza',
-                'constituicao',
-                'inteligencia',
-                'sabedoria',
-                'carisma',
-                'hp_atual',
-                'hp_maximo',
-                'mp_atual',
-                'mp_maximo',
-                'estresse_atual',
-                'estresse_maximo',
-                'defesa'
-            ];
+        if (str_starts_with($property, 'pericias.')) {
+            $parts = explode('.', $property);
+            $index = $parts[1];
+            $campo = $parts[2];
+            $id = $this->pericias[$index]['id'];
 
-            if (in_array($campo, $numericos)) {
-
+            if ($campo === 'outros_bonus') {
                 $value = trim((string) $value);
-                if ($value === '') {
-                    $value = 0;
-                }
-                $value = (int) filter_var($value, FILTER_SANITIZE_NUMBER_INT);
-                $this->dados[$campo] = $value;
+                $value = $value === '' ? 0 : (int) filter_var($value, FILTER_SANITIZE_NUMBER_INT);
+                $this->pericias[$index]['outros_bonus'] = $value;
             }
 
-            DB::table('personagens')
-                ->where('id', $this->personagemId)
-                ->update([$campo => $value]);
+            $updateValue = ($campo === 'treinado') ? ($value ? 1 : 0) : $value;
 
-            //os trem de pericia
-            if (str_starts_with($propertyName, 'pericias.')) {
-                $parts = explode('.', $propertyName);
-                $index = $parts[1];
-                $campo = $parts[2];
-                $id = $this->pericias[$index]['id'];
-
-                if ($campo === 'outros_bonus') {
-                    $value = trim((string) $value);
-
-                    if ($value === '') {
-                        $value = 0;
-                    } else {
-                        $value = (int) filter_var($value, FILTER_SANITIZE_NUMBER_INT);
-                    }
-
-                    $this->pericias[$index]['outros_bonus'] = $value;
-                }
-                DB::table('pericias')
-                    ->where('id', $id)
-                    ->update([
-                        $campo => ($campo === 'treinado') ? ($value ? 1 : 0) : $value
-                    ]);
-            }
-
-            if (str_starts_with($propertyName, 'ataques.')) {
-                $parts = explode('.', $propertyName);
-                $index = $parts[1];
-                $campo = $parts[2];
-                $id = $this->ataques[$index]['id'];
-
-                DB::table('ataques')->where('id', $id)->update([$campo => $value]);
-            }
+            DB::table('pericias')->where('id', $id)->update([$campo => $updateValue]);
         }
     }
 
     public function salvar()
     {
-        try {
-            DB::table('personagens')
-                ->where('id', $this->personagemId)
-                ->update(collect($this->dados)->except(['pericias', 'itens', 'magias', 'ataques'])->toArray());
+        DB::transaction(function () {
+            Personagem::where('id', $this->personagemId)
+                ->update(collect($this->dados)->only([
+                    'nome',
+                    'nivel',
+                    'raca',
+                    'classe',
+                    'divindade',
+                    'forca',
+                    'destreza',
+                    'constituicao',
+                    'inteligencia',
+                    'sabedoria',
+                    'carisma',
+                    'hp_atual',
+                    'hp_maximo',
+                    'mp_atual',
+                    'mp_maximo',
+                    'estresse_atual',
+                    'estresse_maximo',
+                    'descricao',
+                    'defesa',
+                    'foto'
+                ])->toArray());
 
-            session()->flash('status', 'Sincronizado');
-        } catch (\Exception $e) {
-            session()->flash('error', 'Erro ao sincronizar');
-        }
+            foreach ($this->pericias as $p) {
+                DB::table('pericias')
+                    ->where('id', $p['id'])
+                    ->update([
+                        'treinado' => $p['treinado'] ? 1 : 0,
+                        'outros_bonus' => $p['outros_bonus'] ?? 0
+                    ]);
+            }
+        });
+
+        $this->pericias = Personagem::find($this->personagemId)->pericias()->get()->toArray();
+
+        $this->dispatch('saved');
+    }
+
+    public function atualizarPericia($id, $campo, $valor)
+    {
+        DB::table('pericias')->where('id', $id)->update([$campo => $valor]);
     }
 
     public function getCargaTotal()
     {
-        return collect($this->itens)->sum(fn($i) => ($i['peso'] ?? 0.0) * ($i['quantidade'] ?? 1));
+        return collect($this->itens)->sum(fn ($i) => ($i['peso'] ?? 0.0) * ($i['quantidade'] ?? 1));
     }
 
     public function render()
