@@ -65,15 +65,10 @@
     </div>
 </div>
 
-<div class="absolute bottom-10 left-2/3">
-    <h1><strong>FUTUROS UPDATES!</strong></h1>
-        <ul>
-            <ol> - roteiro de combate</ol>
-                <p>As habilidades, ataques e magias, agora vão ter uma checkbox para voce organizar o que quer fazer</p>
-            <ol> - otimizações da ficha</ol>
-            <ol> - alterar a ordem das magias/ataques/itens</ol>
-            <ol> - mais blocos na aba de descrição</ol>
-        </ul>
+<div class="absolute bottom-10 left-2/3 text-base">
+    <p>ATUALIZEI UMAS PARADA NADA A VE SÓ PRA FALAR Q FIZ ALGO, TO MEXENDO NA API E OS KRL A 4
+        IA COLOCAR MARKDOWN NO SITE MAS A PORRA DO JAVASCRIPT N COLABORA, ENT SÓ VAI DAR QUANDO EU LANÇAR A API. É isso vlw
+    </p>
     </div>
 </body>
 </html>

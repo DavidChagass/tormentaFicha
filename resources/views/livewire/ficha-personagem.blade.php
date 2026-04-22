@@ -170,23 +170,23 @@
                                         <div class="w-8 text-center bg-red-900 text-white font-bold rounded text-base">
                                             @php
                                                 $valTreino = 0;
-                                                if($pericia['treinado']){
+                                                if ($pericia['treinado']) {
                                                     if ($dados['nivel'] >= 7 and $dados['nivel'] <= 14) {
                                                         $valTreino = 4;
-                                                    }elseif ($dados['nivel'] >14) {
+                                                    } elseif ($dados['nivel'] > 14) {
                                                         $valTreino = 6;
-                                                    }else {
-                                                        $valTreino=2;
+                                                    } else {
+                                                        $valTreino = 2;
                                                     }
                                                 }
                                             @endphp
-                                            {{ floor($dados['nivel'] / 2) + ($dados[$pericia['atributo_base']] ?? 0) + ($valTreino) + ((int) ($pericia['outros_bonus'] ?? 0)) }}
+                                            {{ floor($dados['nivel'] / 2) + ($dados[$pericia['atributo_base']] ?? 0) + $valTreino + ((int) ($pericia['outros_bonus'] ?? 0)) }}
                                         </div>
                                     </div>
                                 </div>
                             @endforeach
                             <div class="border border-red-800/20 content-center place-items-center p-1 rounded mt-2">
-                                <p class="justify-center ml-2 italic text-red-900/80 text-sm"> + = Penalidade de
+                                <p class="justify-center ml-2 italic text-red-900/80 text-base"> + = Penalidade de
                                     armadura
                                     / * = Somente treinada</p>
                             </div>
@@ -212,8 +212,8 @@
                                             </svg></a>
                                     </summary>
                                     <div class="p-2">
-                                        <textarea class="resize-none bg-transparent w-full h-fit text-red-950 text-base border-none focus:ring-0"
-                                            rows="5" disabled>{{ $att['descricao'] }}</textarea>
+                                        <textarea class="resize-y bg-transparent w-full h-fit text-red-950 text-base border-none focus:ring-0" rows="8"
+                                            disabled>{{ $att['descricao'] }}</textarea>
 
                                     </div>
                                 </details>
@@ -252,7 +252,7 @@
                                     </summary>
 
                                     <textarea class="px-2 py-2 resize-none bg-transparent w-full h-fit text-base text-red-950 border-none focus:ring-0"
-                                        rows="5" disabled>{{ $item['descricao'] }}</textarea>
+                                        rows="8" disabled>{{ $item['descricao'] }}</textarea>
 
                                 </details>
                             @endforeach
@@ -292,7 +292,7 @@
                                             Alcance:
                                             {{ $magia['alvo'] }} | Alvo: {{ $magia['alvo'] }} | Resistencia:
                                             {{ $magia['resistencia'] }}</p>
-                                        <textarea class="resize-none w-full bg-transparent border-none focus:ring-0 text-red-950 font-medium" rows="6"
+                                        <textarea class="resize-none w-full bg-transparent border-none focus:ring-0 text-red-950 font-medium" rows="8"
                                             disabled>{{ $magia['descricao'] }}</textarea>
                                     </div>
 
@@ -301,9 +301,14 @@
                         </div>
 
                         <div wire:ignore x-show="tab === 'desc'">
+                            <button wire:click="salvar"
+                                class="bg-red-800 text-white px-3 py-1 rounded font-bold hover:bg-red-700 transition">SALVAR
+                            </button>
+                            <br>
+                            <small>A descrição não salva automatico. sempre que terminar de editar, aperte o botão de salvar.</small>
                             <textarea wire:model.live="dados.descricao" rows="16"
                                 style="overflow-wrap: break-word; hyphens: auto; resize: none"
-                                class="w-full resize-none h-full text-base text-red-950 p-2 bg-transparent border-none focus:ring-0 font-medium focus:outline-none"></textarea>
+                                class="border-1 w-full resize-none h-full text-base text-red-950 p-2 bg-transparent border-none focus:ring-0 font-medium focus:outline-none"></textarea>
                         </div>
 
                     </div>

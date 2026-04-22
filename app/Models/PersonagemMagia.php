@@ -8,10 +8,10 @@ class PersonagemMagia extends Model
 {
     protected $table = 'personagens_magia';
     protected $guarded = [];
-    
+
     public $timestamps = false;
 
-/*     protected $fillable = [
+    /*     protected $fillable = [
         'personagem_id',
         'nome',
         'circulo',
@@ -25,7 +25,7 @@ class PersonagemMagia extends Model
     ];
 
  */
-     public function personagem()
+    public function personagem()
     {
         return $this->belongsTo(Personagem::class);
     }

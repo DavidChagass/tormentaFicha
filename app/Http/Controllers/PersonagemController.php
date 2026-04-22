@@ -17,7 +17,7 @@ class PersonagemController extends Controller
 {
     public function index()
     {
-        $personagens = Personagem::where('user_id', Auth::id())->get();
+        $personagens = Personagem::where('user_id', Auth::id())->get(['user_id','id','nome', 'nivel', 'classe']);
         if (!$personagens) {
             return redirect()->route('personagem.create');
         }
