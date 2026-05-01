@@ -305,8 +305,7 @@
                                 class="bg-red-800 text-white px-3 py-1 rounded font-bold hover:bg-red-700 transition">SALVAR
                             </button>
                             <br>
-                            <small>A descrição não salva automatico. sempre que terminar de editar, aperte o botão de salvar.</small>
-                            <textarea wire:model.live="dados.descricao" rows="16"
+                            <textarea wire:model.blur="dados.descricao" rows="16"
                                 style="overflow-wrap: break-word; hyphens: auto; resize: none"
                                 class="border-1 w-full resize-none h-full text-base text-red-950 p-2 bg-transparent border-none focus:ring-0 font-medium focus:outline-none"></textarea>
                         </div>

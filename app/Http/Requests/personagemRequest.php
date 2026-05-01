@@ -23,17 +23,17 @@ class personagemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string|max:255',
-            'raca' => 'required|string',
-            'classe' => 'required|string',
+            'nome'      => 'required|string|max:255',
+            'raca'      => 'required|string',
+            'classe'    => 'required|string',
             'divindade' => 'nullable|string',
-            'nivel' => 'nullable|integer'
+            'nivel'     => 'nullable|integer'
         ];
     }
     public function messages(): array
     {
         return [
-            'nome.required' => 'o nome é obrigatório',
+            'nome.required'  => 'o nome é obrigatório',
             'classe.required' => 'voce deve ter uma classe',
         ];
     }
