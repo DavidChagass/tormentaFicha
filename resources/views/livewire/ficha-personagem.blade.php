@@ -8,7 +8,7 @@
     });" class ="relative max-w-5xl mx-auto p-4 md:p-10 min-h-screen">
         <div class="absolute inset-0 z-0"
             style="
-                background-image: url('{{ asset('fundoficha.png') }}');
+                background-image: url('{{ asset('fundoficha.webp') }}');
                 background-size: repeat;
                 background-position: center;
             ">
@@ -309,7 +309,6 @@
                                 style="overflow-wrap: break-word; hyphens: auto; resize: none"
                                 class="border-1 w-full resize-none h-full text-base text-red-950 p-2 bg-transparent border-none focus:ring-0 font-medium focus:outline-none"></textarea>
                         </div>
-
                     </div>
                 </div>
             </div>
